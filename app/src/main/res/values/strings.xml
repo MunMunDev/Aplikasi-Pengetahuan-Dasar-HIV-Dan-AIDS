@@ -1,0 +1,140 @@
+<resources>
+    <string name="app_name">Pengetahuan Dasar HIV Dan AIDS</string>
+    <string name="login">Login</string>
+    <string name="penjelasan_hiv_aids">Penjelasann HIV AIDS</string>
+
+    <string name="nama_konselor">Ns. ABD RISAL, S.KEP., M.Kep.</string>
+    <string name="ttl">Kolonodale, 25 Mei 1983</string>
+    <string name="alamat">Perumnas Wekke’e Blok C No.25 Parepare</string>
+    <string name="pekerjaan">- Konselor HIV aktif 2011-sekarang \n- Fasilitator Konseling dan Tes HIV Dinkes Sulsel 2013-sekarang</string>
+
+    <string name="title_sumber_data">Sumber Data</string>
+    <string name="sumber_data">-  Mengkaji HIV/AIDS dari teoritik hingga praktik\n
+-  Asuhan keperawatan pada pasien terinfeksi HIV/AIDS\n
+-  Bahan ajar AIDS pada asuhan kebidanan
+</string>
+
+    <!-- Informasi HIV AIDS -->
+
+    <string name="definisi_hiv_aids">Definisi HIV AIDS</string>
+    <string name="teks_full_definisi_hiv_aids">HIV (Human Immunodeficiency Virus) merupakan virus golongan RNA yang spesifik menyerang imunitas atau sistem kekebalan tubuh yang kemudian menyebabkan Acquired Immune Deficiency Syndrome (AIDS). Infeksi HIV berjalan dengan sangat Progresif dalam merusak sistem kekebalan tubuh, sehingga infeksi yang disebabkan oleh jamur, parasit , bakteri ataupun virus tidak bisa ditahan oleh tubuh penderita.seseorang yang telah terinfeksi HIV kemungkinan tidak menunjukan gejalah sakit tetapi bisa menginfeksi orang lain.\n
+        AIDS merupakan kumpulan gejala penyakit yang terjadi akibat menurunnya sistem kekebalan tubuh yang disebabkan oleh HIV.Dalam bahasa Indonesia dapat diartikan Sindrom Cacat Kekebalan Tubuh Dapatan. Acquired memiliki arti Didapat, Bukan penyakit keturunan ; Immune memiliki arti Sistem kekebalan tubuh; Deficiency memiliki arti Kekurangan; Syndrome memiliki arti kumpulan gejala-gejala penyakit.\n
+        HIV tidak membunuh  penderitanya. HIV menginfeksi sel-sel darah yang berperan dalam sistem kekebalan tubuh sehingga sel darah tersebut tidak dapat berfungsi lagi. Akibatnya, daya tahan tubuh penderita semakin lama akan semakin menurun sehingga penderita menjadi mudah tertular berbagai macam infeksi.infeksi inilah yang sering mengakibatkan kematian penderita.\n
+        Orang yang terinfeksi HIV dan AIDS sering disebut dengan istilah ODHA, sedangkan orang yang hidup dengan ODHA sering disebut dengan istilah OHIDHA. OHIDHA adalah orang yang hidup bersama atau terdampak dengan adanya ODHA, misalnya keluarga, orang yang merawat keseharain ODHA, teman dekat dan kerabat.
+    </string>
+
+    <string name="sejarah_hiv_aids">Sejarah HIV AIDS</string>
+    <string name="teks_full_sejarah_hiv_aids">Sejarah HIV/AIDS adalah cerita panjang dan kompleks tentang penyebaran dan dampak pandemi virus yang telah mempengaruhi jutaan orang di seluruh dunia. Berikut adalah ikhtisar singkat dari peristiwa-peristiwa penting dalam sejarah HIV/AIDS: \n
+        1. Awal Mula Penyebaran: Virus Human Immunodeficiency Virus (HIV) diyakini telah ada sejak awal abad ke-20, meskipun penyebarannya tidak diketahui hingga kemudian. Para ilmuwan meyakini bahwa HIV berasal dari simpanse di Afrika dan ditularkan ke manusia melalui proses yang disebut "zoonosis" (penularan dari hewan ke manusia). \n
+        2. Kasus Pertama AIDS: Pada awal 1980-an, muncul keluhan tentang kelompok-kelompok orang yang mengalami gangguan sistem kekebalan tubuh dan infeksi langka yang tidak biasa. Pada 1981, Centers for Disease Control and Prevention (CDC) di Amerika Serikat pertama kali mengidentifikasi kelompok orang yang mengalami infeksi langka ini, dan mereka menyebutnya Acquired Immunodeficiency Syndrome (AIDS). \n
+        3. Identifikasi HIV: Pada tahun 1983, para ilmuwan dari Prancis dan Amerika Serikat berhasil mengidentifikasi virus yang menyebabkan AIDS dan menamainya Human Immunodeficiency Virus (HIV). Penemuan ini menjadi langkah penting dalam memahami dan memerangi pandemi HIV/AIDS. \n
+        4. Penyebaran Global: Virus HIV menyebar secara global dan menimbulkan epidemi yang signifikan, terutama di Afrika Sub-Sahara dan beberapa wilayah di Amerika Latin, Karibia, dan Asia. \n
+        5. Pengembangan Terapi Antiretroviral (ARV): Pada pertengahan hingga akhir 1990-an, terapi antiretroviral (ARV) dikembangkan untuk mengobati HIV/AIDS. ARV dapat menekan perkembangan virus dan memperpanjang hidup orang dengan HIV. \n
+        6. Gerakan Aktivis: Seiring dengan penyebaran HIV/AIDS, muncul gerakan aktivis yang kuat di seluruh dunia. Para aktivis berjuang untuk kesetaraan hak, akses terhadap perawatan, penelitian, dan penghapusan stigma yang terkait dengan HIV/AIDS. \n
+        7. Konferensi Internasional tentang AIDS: Konferensi AIDS Internasional menjadi platform penting bagi para peneliti, aktivis, dan pemerintah untuk berbagi pengetahuan, menyampaikan perkembangan dalam penanganan HIV/AIDS, dan merencanakan strategi untuk menghadapi pandemi. \n
+        8. Penanganan Global: Pada tahun 2000, Perserikatan Bangsa-Bangsa (PBB) meluncurkan Program Perdamaian Global terhadap HIV/AIDS (UNAIDS) untuk mengkoordinasikan upaya internasional dalam mengatasi pandemi HIV/AIDS. \n
+        9. Perjuangan Terus Berlanjut: Meskipun terdapat kemajuan yang signifikan dalam penanganan HIV/AIDS, pandemi ini masih merupakan masalah kesehatan global yang serius. Upaya terus dilakukan untuk mencegah penyebaran, memberikan perawatan dan dukungan, serta menghapus stigma yang terkait dengan HIV/AIDS
+    </string>
+
+    <string name="gejala_hiv_aids">Gejala HIV AIDS</string>
+    <string name="teks_full_gejala_hiv_aids">Infeksi HIV (Human Immunodeficiency Virus) dapat menimbulkan berbagai gejala pada tahap awal infeksi, tetapi juga bisa tidak menimbulkan gejala sama sekali. Beberapa gejala awal infeksi HIV, yang sering disebut sebagai infeksi primer atau fase akut HIV, termasuk:\n
+        1. Demam: Demam ringan hingga tinggi adalah salah satu gejala umum infeksi primer HIV. \n
+        2. Sakit Kepala: Gejala ini dapat disertai gejala lain seperti pusing dan kelelahan. \n
+        3. Mialgia (Nyeri Otot): Nyeri atau ketidaknyamanan pada otot. \n
+        4. Nyeri Tenggorokan dan Pembesaran Kelenjar Getah Bening: Kelenjar getah bening di leher, ketiak, atau pangkal paha dapat membesar dan terasa nyeri. \n
+        5. Ruam Kulit: Ruam ringan hingga berat yang dapat muncul di seluruh tubuh atau hanya di beberapa bagian tubuh. \n
+        6. Menggigil dan Berkeringat di Malam Hari: Gejala ini sering disebut "night sweats" atau keringat malam. \n
+        7. Sakit Tenggorokan dan Batuk: Gejala yang mirip seperti pilek atau flu. \n
+        Gejala-gejala ini biasanya muncul dalam waktu 2 hingga 4 minggu setelah terpapar virus HIV dan dapat berlangsung selama beberapa minggu. Namun, perlu dicatat bahwa tidak semua orang yang terinfeksi HIV akan mengalami gejala ini, dan beberapa orang mungkin tidak merasakan gejala sama sekali. Infeksi HIV awal ini bisa menyerupai gejala penyakit lain, sehingga diagnosis HIV hanya dapat dipastikan melalui tes darah. \n
+        Setelah fase akut HIV, virus biasanya memasuki fase laten (tanpa gejala klinis), dan orang tersebut mungkin tidak mengalami gejala selama beberapa tahun atau lebih. Namun, virus tetap aktif di dalam tubuh dan dapat menyebabkan kerusakan pada sistem kekebalan tubuh. \n
+        Jika infeksi HIV tidak diobati, lama-kelamaan sistem kekebalan tubuh menjadi lemah dan rentan terhadap infeksi dan penyakit lainnya. Pada tahap lanjut HIV (AIDS), orang mungkin mengalami gejala yang lebih berat, termasuk infeksi oportunistik (infeksi yang biasanya tidak menyerang orang dengan sistem kekebalan tubuh yang normal) dan beberapa jenis kanker yang jarang terjadi.
+    </string>
+
+    <string name="penularan_hiv_aids">Penularan HIV AIDS</string>
+    <string name="teks_full_penularan_hiv_aids">HIV masuk kedalam tubuh manusia melalui aliran darah. HIV mudah mati diluar tubuh manusia, oleh karena itu HIV tidak dapat menular melalui udara. Penularan HIV bisa terjadi melalui beberapa cara , yaitu: \n
+        1. Secara vertical dari ibu yang terinfeksi HIV kepada anaknya (Mother to child transmission/MTCT). Penularan HIV dapat terjadi pada anak-anak dari ibunya yang terinfeksi HIV. Penularan ini bisa terjadi dari ibu kepada janinnya ketika hamil, persalinan dan setelah melahirkan melalui pemberian air susu ibu (ASI). \n
+        2. Secara Transeksual (homoseksual maupun heteroseksual). Kontak seksual adalah salah satu penyebab utama transmisi HIV di dunia.HIV dapat ditemukan dalam cairan vagina dan cairan serviks. Hubungan seksual yang tidak aman dengan seseorang yang terinfeksi HIV adalah transmisi yang paling sering terjadi. Beberapa penelitian menyatakan hubungan seks melalui vagina dan anus beresiko lebih tinggi dibandingkan dengan oral seks. \n
+        3. Secara horizontal yaitu kontak antar darah atau produk darah yang terinfeksi. Darah dan produk darah merupakan media yang sangat baik untuk transmisi HIV. Untuk dapat menular, cairan tubuh harus masuk langsung kedalam peredaran darah. Hal in bisa terjadi pada individu yang menerima trasfusi darah. \n
+        4. Penularan HIV melalui alat suntik yang terkontaminasi (pada pengguna napza). Populasi yang beresiko terhadap penularan HIV melalui alat suntik adalah pengguna narkoba suntik (penasun) yang menggunakan jarum suntik secara bersama-sama.
+    </string>
+
+    <string name="metode_tes_hiv">Metode Tes HIV</string>
+    <string name="teks_full_metode_tes_hiv">1) Rapid test\n
+        Berbagai macam rapid test tersedia dan digunakan berdasarkan bermacam-macam teknik, diantaranya aglutinasi partikel, leteral flow atau dipstick. Rappid test adalah test HIV yang tidak memerlukan alat khusus dan hanya membutuhkan waktu 10 menit. \n
+        2) ELISA ( Enzyme Linked Immunosorbent Assay) \n
+        Test ini dilakukan dengan mendeteksi antibody HIV dengan cara berlapis. Jika ditemukan adanya antibody didalam tes serum ini,antibody tersebut akan terperangkap dalam lapisan antara antigen HIV yang melekat dalam  tes dan enzim yang ditambahkan kedalam tes, Kemudian dilakukan pencucian untuk melepaskan enzim yang terikat. Selanjutnya reagen pewarna ditambahkan,setiap enzim yang terikat akan dikatalisasi sehingga terjadi perubahan warna pada reagen karena adanya antibody HIV. \n
+        3) Western blot \n
+        Pada tes ini HIV dideteksi dengan cara reaksi berbagai protein virus yang dipisahkan dalam bentuk pita-pita dalam gel elektroforesis berdasarkan berat molekulnya. Protein ini kemudian dipisahkan kedalam kertas nitroselulose dalam bentuk tetesan (blotted). Kertas kemudian diinkubasi kedalam serum pasien. Antibody HIV positif akan mengikat kertas nitroselulose secara tepat pada titik target migrasi protein. Ikatan antibody akan dideteksi dengan menggunakan teknik colouriometic.
+    </string>
+
+    <string name="pencegahan_hiv_aids">Pencegahan HIV AIDS</string>
+    <string name="teks_full_pencegahan_hiv_aids">Pencegahan HIV/AIDS sangat penting dalam mengurangi penyebaran virus dan melindungi kesehatan masyarakat. Berikut adalah beberapa cara pencegahan HIV/AIDS: \n
+        1. Penggunaan Kondom: Penggunaan kondom saat berhubungan seks (baik vaginal, anal, atau oral) dapat mengurangi risiko penularan HIV. Kondom adalah salah satu metode kontrasepsi yang efektif dan juga membantu melindungi dari infeksi menular seksual (IMS) lainnya. \n
+        2. Tes HIV dan Konseling: Melakukan tes HIV secara rutin membantu mengidentifikasi infeksi lebih awal, sehingga dapat segera mendapatkan perawatan dan mengurangi risiko penularan ke orang lain. Konseling terkait HIV juga penting untuk meningkatkan kesadaran dan pemahaman mengenai risiko serta cara pencegahan. \n
+        3. Terapi Antiretroviral (ARV): Bagi orang yang hidup dengan HIV, penggunaan terapi antiretroviral (ARV) sangat penting. ARV dapat menekan perkembangan virus, menjaga sistem kekebalan tubuh tetap kuat, dan mengurangi risiko penularan HIV ke orang lain. \n
+        4. Pembatasan Pasangan Seksual: Memiliki hubungan seksual monogami dengan pasangan yang terinfeksi HIV negatif dan setia satu sama lain dapat mengurangi risiko penularan HIV. \n
+        5. Penggunaan Jarum dan Suntikan yang Aman: Bagi pengguna obat suntik, penting untuk menggunakan jarum dan peralatan yang bersih dan tidak digunakan bersama dengan orang lain guna mencegah penularan HIV melalui darah. \n
+        6. Edukasi dan Kesadaran: Meningkatkan pemahaman tentang HIV/AIDS dan mengurangi stigma terhadap orang yang hidup dengan HIV/AIDS adalah langkah penting dalam pencegahan. Edukasi yang tepat tentang seksualitas, penularan HIV, dan cara pencegahan harus diberikan kepada masyarakat. \n
+        7. Program Pengganti Jarum Suntik: Peningkatan akses ke program pengganti jarum suntik yang bersih dapat membantu mengurangi risiko penularan HIV dan infeksi lainnya bagi pengguna obat suntik. \n
+        8. Akses ke Pelayanan Kesehatan: Meningkatkan akses ke layanan kesehatan yang aman dan terjangkau dapat membantu dalam deteksi dini, perawatan, dan dukungan bagi individu yang hidup dengan HIV/AIDS. \n
+        9. Vaksinasi: Penelitian sedang dilakukan untuk mengembangkan vaksin HIV. Jika berhasil, vaksin ini akan menjadi langkah maju dalam pencegahan HIV/AIDS.
+    </string>
+
+    <string name="pengobatan_hiv_aids">Pengobatan HIV AIDS</string>
+    <string name="teks_full_pengobatan_hiv_aids">Pengobatan HIV/AIDS didasarkan pada penggunaan terapi antiretroviral (ARV). Terapi antiretroviral adalah kombinasi dari beberapa obat yang bertujuan untuk menekan perkembangan virus HIV dalam tubuh dan menjaga sistem kekebalan tubuh tetap kuat. Pengobatan ini telah terbukti sangat efektif dalam memperlambat perkembangan HIV, mengurangi tingkat replikasi virus, dan meningkatkan harapan hidup orang yang hidup dengan HIV/AIDS. \n
+        Pengobatan HIV/AIDS biasanya terdiri dari tiga obat antiretroviral atau lebih yang dikombinasikan dalam apa yang disebut sebagai Terapi Antiretroviral Kombinasi (Highly Active Antiretroviral Therapy - HAART). Pengobatan ini dirancang untuk menargetkan virus HIV dari berbagai sisi, sehingga lebih efektif dalam menekan perkembangan virus dan mengurangi risiko resistensi obat. \n
+        Berikut adalah beberapa poin penting mengenai pengobatan HIV/AIDS: \n
+        1)	Kepatuhan: Kepatuhan dalam mengikuti jadwal dan dosis obat adalah kunci keberhasilan terapi antiretroviral. Penting untuk mengikuti instruksi dokter dengan disiplin untuk memaksimalkan efektivitas pengobatan. \n
+        2)	Monitoring Rutin: Orang yang hidup dengan HIV/AIDS perlu menjalani tes darah secara rutin untuk memantau tingkat virus dan kesehatan umum mereka. Hal ini membantu dokter memantau respon terhadap pengobatan dan membuat perubahan jika diperlukan. \n
+        3)	Efek Samping: Beberapa obat antiretroviral dapat menimbulkan efek samping. Dokter akan membantu memantau dan mengelola efek samping yang mungkin timbul. \n
+        4)	Pengobatan pada Tahap Awal: Semakin dini seseorang memulai pengobatan setelah diagnosis HIV, semakin baik peluang untuk mengelola virus dengan baik dan mencegah perkembangan AIDS. \n
+        5)	Pengobatan untuk Penyakit Terkait AIDS: Selain terapi antiretroviral, pengobatan juga diberikan untuk mengatasi infeksi oportunistik dan penyakit terkait AIDS lainnya. \n
+        6)	Pencegahan Penularan: Pengobatan HIV/AIDS yang efektif juga dapat membantu mengurangi risiko penularan HIV ke orang lain. \n \n
+        Penting untuk dicatat bahwa meskipun terapi antiretroviral sangat efektif dalam mengendalikan HIV, saat ini belum ada obat yang dapat menyembuhkan HIV secara menyeluruh. Pengobatan HIV/AIDS merupakan proses jangka panjang dan memerlukan komitmen dari pihak penderita untuk mencapai hasil yang optimal. \n
+        Setiap individu yang hidup dengan HIV/AIDS harus berkonsultasi dengan penyedia layanan kesehatan yang berpengalaman dalam penanganan HIV/AIDS untuk merencanakan dan mengelola pengobatan yang sesuai dengan kebutuhan dan kondisi kesehatan masing-masing.
+    </string>
+
+    <string name="mencegah_hiv_aids_agar_tidak_komplikasi">Mencegah HIV AIDS Agar Tidak Komplikasi</string>
+    <string name="teks_full_mencegah_hiv_aids_agar_tidak_komplikasi">Mencegah komplikasi sangat krusial bagi penderita HIV AIDS untuk kelangsungan hidupnya. Berikut ini beberapa langkah pencegahan komplikasi HIV yang bisa dilakukan : \n
+        1)	Kontrol dan jalani pengobatan HIV dengan teratur \n
+        Beberapa komplikasi terjadi karena infeksi HIV sudah parah dan menyebabkan sindrom HIV AIDS. Menjalani pengobatan HIV secara teratur dapat mengendalikan jumlah sel kekebalan tubuh CD4(yaitu jenis limfosit yang diserang oleh HIV) agar tetap banyak dan tidak dibawah 200. \n
+        2)	Jalani gaya hidup sehat dan selalu jaga kebersihan \n
+        Dengan menjalani hidup sehat seperti diet dan rutin berolahraga, pederita HIV dapat terhindar dari beberapa komplikasi seperti lipodistrofi, kanker dan masih banyak lagi. \n
+        3)	Menghindari infeksi \n
+        Beberapa infeksi oportunistik seperti tuberkulosis (TB) ditularkan melalui udara seperti dari batu atau bersin.sebagai penderita HIV, sebaiknya anda menggunakan pelindung seperti masker dan menghindari orang yang batuk atau bersin agar tidak tertular. \n
+        4)	hindari sirkulasi udara yang tidak baik \n
+        Tempat yang ramai atau sirkulasi udaranya kurang baik merupakan lingkungan yang banyak dihuni kuman. Hindari tempat-tempat seperti ini supaya penderita tidak mudah terkena penyakit, tempatlain seperti rumah sakit,klinik,dan penjara rentan terhadap banyak kuman. \n
+        5)	Hindari penggunaan jarum suntik, merokok, dan mengonsumsi alcohol \n
+        Penderita HIV akan lebih mudah terkena infeksi TB jika mengonsumsi alcohol dan menggunakan jarum suntik narkotika. \n
+        6)	Mengonsumsi obat profilaksis dari dokter \n
+        Dokter dapat memberikan antibiotik seperti klaritomsin dan azitromisin jika jumlah sel CD4 anda dibawa 50 untuk mencegah MAC. Ketika jumlah sel CD4 sudah diatas 100 untuk 6 bulan, anda mungkin dapat menghentikan pemakaian antibiotik. Pemakaian obat profilaksis juga dapat mencegah infeksi lainnya seperti PCP, CMV dan lain-lain. \n
+        7)	Lakukan pemeriksaan rutin sistem reproduksi untuk wanita \n
+        Wanita sebaiknya melakukan pemeriksaan panggul dan pap smear secara teratur untuk mencegah adanya infeksi,bahkan kanker reproduksi.
+    </string>
+
+    <string name="undang_undang_kerahasiaan_pasien">Undang-Undang Yang Membahas Kerahasiaan Data Pasien HIV/AIDS</string>
+    <string name="teks_full_undang_undang_kerahasiaan_pasien">
+        Peraturan Menteri Kesehatan Republik Indonesia Nomor 23 Tahun 2022 Tentang Penanggulangan Human Immunodeficiency Virus, Acquired Immuno- Deficiency Syndrome, dan Infeksi Menular Seksual Pasal 31 yang berbunyi : \n
+        1)	Setiap orang yang telah terdiagnosis HIV, AIDS, dan IMS wajib mendapatkan komunikasi, informasi, dan edukasi sesuai dengan kebutuhan dan diregistrasi secara nasional \n
+        2)	Registrasi sebagaimana dimaksud pada ayat (1) harus dijaga kerahasiaannya sesuai dengan ketentuan peraturan perundang-undangan.
+    </string>
+
+    <string name="data_hiv_aids_di_parepare">Data HIV AIDS Di Parepare Tahun 2022</string>
+    <string name="teks_full_data_hiv_aids_di_parepare">Data HIV AIDS Pada Setiap Kecamatan di Parepare Memiliki Total 42 Kasus.\n
+        1) Kecamatan Bacukiki : 0 Kasus \n
+        2) Kecamatan Bacukiki Barat : 15 Kasus \n
+        3) Kecamatan Ujung : 21 Kasus \n
+        4) Kecamatan Soreang : 6 Kasus \n
+        Total : 42 Kasus
+    </string>
+
+    <string name="data_hiv_aids_di_indonesia_2022">Data HIV AIDS Di Indonesia Tahun 2022</string>
+    <string name="teks_full_data_hiv_aids_di_indonesia_2022">Menurut laporan Badan Narkotika Nasional (BNN), sepanjang 2022 ada 62.856 kasus Human Immunodeficiency Virus (HIV) dan Acquired Immune Deficiency Syndrome (AIDS) di Indonesia. Rinciannya, 9.901 kasus AIDS dan 52.955 kasus HIV.Laki-laki mendominasi kasus HIV dan AIDS di Tanah Air. Jumlah kasus HIV pada laki-laki sebanyak 31.218 kasus atau setara 58,95% dari total kasus HIV di dalam negeri.
+        Di sisi lain, jumlah kasus HIV perempuan 21.737 kasus, dan yang gendernya tidak diketahui 0 kasus.Adapun jumlah kasus AIDS pada laki-laki mencapai 7.375 kasus, atau setara 74,48% dari total kasus AIDS di Indonesia pada 2022.Sementara, kasus AIDS perempuan 2.521 kasus, dan gendernya tidak diketahui 5 kasus.BNN melaporkan, mayoritas kasus HIV dan AIDS di Indonesia pada 2022 ditularkan melalui hubungan homoseksual, yaitu sebanyak 17.983 kasus.
+        Faktor risiko penularan terbesar berikutnya adalah melalui hubungan heteroseksual yaitu 12.072 kasus.Kemudian, penularan HIV dan AIDS di Indonesia juga melalui transfusi pranatal 7.310 kasus, jarum suntik tidak streril 351 kasus, hubungan biseksual 189 kasus, faktor risiko lainnya 12.324 kasus, serta faktor yang tidak diketahui 12.611 kasus.
+        \n Sumber : Badan Narkotika Nasional (BNN), Mei 2023
+    </string>
+
+    <!-- Tentang Aplikasi -->
+
+</resources>

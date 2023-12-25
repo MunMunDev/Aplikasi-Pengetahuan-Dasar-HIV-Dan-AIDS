@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "246185837918",
+    "project_id": "pengetahuan-dasar-hiv-aids",
+    "storage_bucket": "pengetahuan-dasar-hiv-aids.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:246185837918:android:808120a9bc2a6421cb7bcf",
+        "android_client_info": {
+          "package_name": "com.example.rusly_aplikasipengetahuandasarhivdanaids"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "246185837918-gk4f6lai3pnbop634b8h5tak6jtn47nl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAl42Nl-rnAuVyKg4mFcPLkBBttMxKC5ps"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "246185837918-gk4f6lai3pnbop634b8h5tak6jtn47nl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

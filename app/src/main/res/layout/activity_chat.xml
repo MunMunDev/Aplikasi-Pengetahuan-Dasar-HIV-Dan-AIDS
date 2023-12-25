@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.ChatActivity">
+    <View
+        android:id="@+id/bgHeader"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/tvNamaDokter"
+        android:background="@drawable/bg_header_merah"/>
+
+    <ImageView
+        android:id="@+id/ivBack"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:src="@drawable/baseline_arrow_back_24"
+        android:elevation="10dp"/>
+
+    <TextView
+        android:id="@+id/tvNamaDokter"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ivBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="22dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="20dp"
+        android:text="Konsultasi"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvListKonsultasiChatDokter"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/bgHeader"
+        app:layout_constraintBottom_toTopOf="@+id/etMessage"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="12dp"
+        tools:listitem="@layout/list_received"
+        tools:itemCount="5"/>
+
+    <EditText
+        android:id="@+id/etMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxHeight="110dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnSendMessage"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="5dp"
+        android:hint="Masukkan Pesan"
+        android:background="@drawable/bg_et_chat"
+        android:inputType="textMultiLine"
+        android:maxLength="300"/>
+    <ImageView
+        android:id="@+id/btnSendMessage"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/baseline_send_24"
+        android:background="@drawable/bg_send_message"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

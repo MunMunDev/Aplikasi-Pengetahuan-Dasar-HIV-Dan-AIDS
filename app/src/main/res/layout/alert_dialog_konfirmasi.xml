@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="30dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginEnd="30dp"
+    android:paddingBottom="20dp"
+    android:background="@drawable/bg_card">
+
+    <TextView
+        android:id="@+id/tvTitleKonfirmasi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="Konfirmasi ?"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvBodyKonfirmasi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="Konfirmasi ?"
+        android:textStyle="normal"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitleKonfirmasi" />
+
+    <Button
+        android:id="@+id/btnKonfirmasi"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnBatal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvBodyKonfirmasi"
+        android:layout_marginTop="22dp"
+        android:layout_marginStart="20dp"
+        android:text="Konfirmasi"
+        android:textColor="@color/white"
+        android:background="@drawable/bg_btn_danger"
+        android:layout_marginEnd="10dp"/>
+
+    <Button
+        android:id="@+id/btnBatal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnKonfirmasi"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvBodyKonfirmasi"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="20dp"
+        android:text="Batal"
+        android:textColor="@color/white"
+        app:iconGravity="textEnd"
+        android:background="@drawable/bg_btn_batal"
+        android:layout_marginStart="10dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

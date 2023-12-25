@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/merah_btn_registrasi"/>
+    <corners android:radius="4dp"/>
+    <stroke android:color="@color/merah_maroon"
+        android:width="1.6dp"/>
+</shape>
