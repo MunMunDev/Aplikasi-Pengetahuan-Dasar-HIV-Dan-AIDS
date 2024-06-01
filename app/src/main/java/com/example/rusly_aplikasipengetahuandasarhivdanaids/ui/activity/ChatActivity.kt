@@ -5,9 +5,11 @@ import android.app.Activity
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.adapter.MessageKonsultasiAdapter
@@ -17,6 +19,7 @@ import com.example.rusly_aplikasipengetahuandasarhivdanaids.data.model.MessageMo
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.data.model.NotificationModel
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.data.model.PushNotificationModel
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.databinding.ActivityChatBinding
+import com.example.rusly_aplikasipengetahuandasarhivdanaids.databinding.AlertDialogKeteranganBinding
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.utils.SharedPreferencesLogin
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -57,7 +60,7 @@ class ChatActivity : Activity() {
 
         val bundle = intent.extras
         sharedPref = SharedPreferencesLogin(this@ChatActivity)
-        database = FirebaseService().firebase().child("chats").child("message")
+        database = FirebaseService().firebase().child("information")
 
         idSent = sharedPref.getId()
         idReceived = bundle!!.getString("id").toString()
@@ -66,7 +69,36 @@ class ChatActivity : Activity() {
 
         hurufAcak()
 
-        binding.etMessage.requestFocus()
+        val waktuZonaMakassar = waktuSekarangZonaMakassar().split(":")
+        val jam = waktuZonaMakassar[0].trim().toInt()
+        if(jam.toLong() >= 8.toLong() && jam.toLong() <= 16.toLong()){
+            binding.apply {
+                llMessage.visibility = View.VISIBLE
+                llDontSendMessage.visibility = View.GONE
+
+                etMessage.requestFocus()
+            }
+        } else{
+            binding.apply {
+                llMessage.visibility = View.GONE
+                llDontSendMessage.visibility = View.VISIBLE
+            }
+        }
+
+        binding.apply {
+            btnInfoDontSendMessage.setOnClickListener{
+                llMessage.visibility = View.VISIBLE
+                llDontSendMessage.visibility = View.GONE
+
+                etMessage.requestFocus()
+            }
+        }
+
+//        binding.ivInfoSaranJamChat.setOnClickListener {
+//            setShowJudul("08:00 - 16.00 WITA")
+//        }
+
+//        binding.etMessage.requestFocus()
 
         database.addValueEventListener(object: ValueEventListener{
             @SuppressLint("NotifyDataSetChanged")
@@ -213,6 +245,24 @@ class ChatActivity : Activity() {
         }
     }
 
+    private fun setShowJudul(jam: String) {
+        val view = AlertDialogKeteranganBinding.inflate(layoutInflater)
+
+        val alertDialog = AlertDialog.Builder(this@ChatActivity)
+        alertDialog.setView(view.root)
+            .setCancelable(false)
+        val dialogInputan = alertDialog.create()
+        dialogInputan.show()
+
+        view.apply {
+            tvTitleKeterangan.text = "Jam Operasional"
+            tvBodyKeterangan.text = "Saran chat Dokter pada jam $jam"
+            btnClose.setOnClickListener {
+                dialogInputan.dismiss()
+            }
+        }
+    }
+
     fun hurufAcak(){
 
 //        val dateTime = "${tanggalSekarang()}-${waktuSekarang()}"
@@ -231,6 +281,12 @@ class ChatActivity : Activity() {
     }
 
     fun tanggalSekarang():String{
+//        val calendar: Calendar = Calendar.getInstance()
+//        calendar.timeZone = TimeZone.getTimeZone("Asia/Jakarta")
+//        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
+//        simpleDateFormat.timeZone = TimeZone.getTimeZone("Asia/Jakarta")
+//        val dateTime = simpleDateFormat.format(calendar.time)
+
         val calendar: Calendar = Calendar.getInstance()
         calendar.timeZone = TimeZone.getTimeZone("Asia/Jakarta")
         val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
