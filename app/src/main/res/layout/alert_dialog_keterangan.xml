@@ -34,7 +34,8 @@
         android:layout_marginEnd="4dp"
         android:src="@drawable/icon_close" />
 
-    <ScrollView
+    <TextView
+        android:id="@+id/tvBodyKeterangan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,24 +43,13 @@
         app:layout_constraintTop_toBottomOf="@id/tvTitleKeterangan"
         android:layout_marginTop="16dp"
         android:layout_marginStart="4dp"
-        android:layout_marginEnd="4dp">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tvBodyKeterangan"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                android:text="Keterangan selengkapnya"
-                android:textStyle="normal"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:paddingBottom="50dp"
-                android:lineSpacingExtra="2dp"
-                android:gravity="left|right"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+        android:layout_marginEnd="4dp"
+        android:text="Keterangan selengkapnya"
+        android:textStyle="normal"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:lineSpacingExtra="2dp"
+        android:gravity="start"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

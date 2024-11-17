@@ -31,23 +31,10 @@
 <!--        android:background="@drawable/bg_table"/>-->
 
     <TextView
-        android:id="@+id/tvJudul"
+        android:id="@+id/tvKeterangan"
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:text="Judul"
-        android:textSize="14sp"
-        android:textColor="@color/black"
-        android:textStyle="normal"
-        android:gravity="center"
-        android:lines="1"
-        android:ellipsize="end"
-        android:background="@drawable/bg_table"/>
-
-    <TextView
-        android:id="@+id/tvIsi"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:text="Ini adalah isi dari informasi"
+        android:text="Keterangan"
         android:textSize="14sp"
         android:textColor="@color/black"
         android:textStyle="normal"
@@ -58,28 +45,23 @@
 
     <TextView
         android:id="@+id/tvGambar"
-        android:layout_width="80dp"
+        android:layout_width="60dp"
         android:layout_height="50dp"
-        android:text="Gambar"
         android:textSize="14sp"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:layout_gravity="center"
         android:gravity="center"
-        android:foregroundGravity="center"
         android:background="@drawable/bg_table_title"/>
 
     <ImageView
         android:id="@+id/ivGambar"
-        android:layout_width="80dp"
+        android:layout_width="60dp"
         android:layout_height="50dp"
-        android:textStyle="bold"
         android:layout_gravity="center"
         android:gravity="center"
-        android:foregroundGravity="center"
         android:background="@drawable/bg_table"
-        android:visibility="gone"
-        android:src="@drawable/gambar"/>
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/tvSetting"

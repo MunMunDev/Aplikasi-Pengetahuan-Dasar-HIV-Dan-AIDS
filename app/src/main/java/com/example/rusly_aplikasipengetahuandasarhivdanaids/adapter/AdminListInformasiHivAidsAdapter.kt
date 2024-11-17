@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.R
@@ -34,27 +35,28 @@ class AdminListInformasiHivAidsAdapter(
         holder.binding.apply {
             if(position==0){
                 tvNo.text = "NO"
-                tvUrutan.text = "Urutan"
                 tvJudul.text = "Judul Informasi "
                 tvIsi.text = "Isi Informasi"
+                tvGambar.text = "Urutan"
+                tvGambar.text = "Gambar"
                 tvSetting.text = ""
 
                 tvNo.setBackgroundResource(R.drawable.bg_table_title)
-                tvUrutan.setBackgroundResource(R.drawable.bg_table_title)
                 tvJudul.setBackgroundResource(R.drawable.bg_table_title)
                 tvIsi.setBackgroundResource(R.drawable.bg_table_title)
+                tvGambar.setBackgroundResource(R.drawable.bg_table_title)
                 tvSetting.setBackgroundResource(R.drawable.bg_table_title)
 
                 tvNo.setTextColor(Color.parseColor("#ffffff"))
-                tvUrutan.setTextColor(Color.parseColor("#ffffff"))
                 tvJudul.setTextColor(Color.parseColor("#ffffff"))
                 tvIsi.setTextColor(Color.parseColor("#ffffff"))
+                tvGambar.setTextColor(Color.parseColor("#ffffff"))
                 tvSetting.setTextColor(Color.parseColor("#ffffff"))
 
                 tvNo.setTypeface(null, Typeface.BOLD)
-                tvUrutan.setTypeface(null, Typeface.BOLD)
                 tvJudul.setTypeface(null, Typeface.BOLD)
                 tvIsi.setTypeface(null, Typeface.BOLD)
+                tvGambar.setTypeface(null, Typeface.BOLD)
                 tvSetting.setTypeface(null, Typeface.BOLD)
             }
             else{
@@ -62,31 +64,32 @@ class AdminListInformasiHivAidsAdapter(
                 val isiPakaiNewLine = information.isi!!.replace("\n", System.getProperty("line.separator")!!);
 
 //                tvNo.text = "$position"
-//                tvUrutan.text = information.urutan
+////                tvUrutan.text = information.urutan
 //                tvJudul.text = information.judul
 //                tvIsi.text = information.isi
+//                Gambarsi.text = information.isi
 //                tvSetting.text = ":::"
 
                 tvNo.text = "$position"
-                tvUrutan.text = information.urutan
+//                tvUrutan.text = information.urutan
                 tvJudul.text = information.judul
                 tvIsi.text = isiPakaiNewLine
                 tvSetting.text = ":::"
 
                 tvNo.setBackgroundResource(R.drawable.bg_table)
-                tvUrutan.setBackgroundResource(R.drawable.bg_table)
+//                tvUrutan.setBackgroundResource(R.drawable.bg_table)
                 tvJudul.setBackgroundResource(R.drawable.bg_table)
                 tvIsi.setBackgroundResource(R.drawable.bg_table)
                 tvSetting.setBackgroundResource(R.drawable.bg_table)
 
                 tvNo.setTextColor(Color.parseColor("#000000"))
-                tvUrutan.setTextColor(Color.parseColor("#000000"))
+//                tvUrutan.setTextColor(Color.parseColor("#000000"))
                 tvJudul.setTextColor(Color.parseColor("#000000"))
                 tvIsi.setTextColor(Color.parseColor("#000000"))
                 tvSetting.setTextColor(Color.parseColor("#000000"))
 
                 tvNo.setTypeface(null, Typeface.NORMAL)
-                tvUrutan.setTypeface(null, Typeface.NORMAL)
+//                tvUrutan.setTypeface(null, Typeface.NORMAL)
                 tvJudul.setTypeface(null, Typeface.NORMAL)
                 tvIsi.setTypeface(null, Typeface.NORMAL)
                 tvSetting.setTypeface(null, Typeface.NORMAL)
@@ -94,11 +97,17 @@ class AdminListInformasiHivAidsAdapter(
                 tvJudul.gravity = Gravity.CENTER_VERTICAL
                 tvIsi.gravity = Gravity.CENTER_VERTICAL
 
+                tvGambar.visibility = View.GONE
+                ivGambar.visibility = View.VISIBLE
+
                 tvJudul.setOnClickListener{
                     onClick.clickItemJudul(information.judul!!, it)
                 }
                 tvIsi.setOnClickListener{
                     onClick.clickItemIsi(information.isi!!, it)
+                }
+                ivGambar.setOnClickListener{
+                    onClick.clickItemGambar(information.id!!, information.judul!!, it)
                 }
                 tvSetting.setOnClickListener {
                     onClick.clickItemSetting(information, it)

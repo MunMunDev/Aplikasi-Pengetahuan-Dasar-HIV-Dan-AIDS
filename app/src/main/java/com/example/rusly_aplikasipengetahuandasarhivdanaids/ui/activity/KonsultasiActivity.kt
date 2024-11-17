@@ -20,14 +20,17 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.delay
 
 class KonsultasiActivity : Activity() {
     lateinit var binding: ActivityKonsultasiBinding
     lateinit var kontrolNavigationDrawer: KontrolNavigationDrawer
-    lateinit var usersArrayList: ArrayList<UsersModel>
+    var usersArrayList: ArrayList<UsersModel> = arrayListOf()
+    var arrayCariChat: ArrayList<String> = arrayListOf()
     lateinit var konsultasiUserAdapter: ListKonsultasiUserAdapter
     lateinit var sharedPref: SharedPreferencesLogin
     lateinit var database : DatabaseReference
+    lateinit var databaseChat : DatabaseReference
     val TAG = "KonsultasiActivity";
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,40 +40,56 @@ class KonsultasiActivity : Activity() {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(view)
 
-        kontrolNavigationDrawer = KontrolNavigationDrawer(this@KonsultasiActivity)
+        setSharedPref()
+        setKontrolNavigationDrawer()
+        fetchUser()
+    }
 
-        database = FirebaseService().firebase().child("users")
-        usersArrayList = ArrayList()
-
+    private fun setSharedPref() {
         sharedPref = SharedPreferencesLogin(this@KonsultasiActivity)
-//        if(sharedPref.getSebagai()=="user"){
-//            database = FirebaseDatabase.getInstance().getReference("dokter")
-//        }
-//        else if(sharedPref.getSebagai()=="dokter"){
-//            database = FirebaseDatabase.getInstance().getReference("users")
-//        }
+    }
+
+    private fun setKontrolNavigationDrawer() {
+        kontrolNavigationDrawer = KontrolNavigationDrawer(this@KonsultasiActivity)
+        binding.apply {
+            kontrolNavigationDrawer.cekSebagai(navView)
+            kontrolNavigationDrawer.onClickItemNavigationDrawer(navView, drawerLayoutMain, ivDrawerView, this@KonsultasiActivity)
+        }
+    }
+
+    private fun fetchUser(){
+        database = FirebaseService().firebase().child("users")
 
         database.addValueEventListener(object: ValueEventListener{
             @SuppressLint("NotifyDataSetChanged")
+
+            var idSentTemp = ""
+            var id = ""
+            var nama = ""
+            var umur = ""
+            var username = ""
+            var password = ""
+            var sebagai = ""
+            var token = ""
+            var adaChat = ""
+
             override fun onDataChange(snapshot: DataSnapshot) {
                 usersArrayList = ArrayList()
                 for(value in snapshot.children){
-                    val id = value.child("id").value.toString()
-                    val nama = value.child("nama").value.toString()
-                    val umur = value.child("umur").value.toString()
-                    val username = value.child("username").value.toString()
-                    val password = value.child("password").value.toString()
-                    val sebagai = value.child("sebagai").value.toString()
-                    val token = value.child("token").value.toString()
+                    id = value.child("id").value.toString()
+                    nama = value.child("nama").value.toString()
+                    umur = value.child("umur").value.toString()
+                    username = value.child("username").value.toString()
+                    password = value.child("password").value.toString()
+                    sebagai = value.child("sebagai").value.toString()
+                    token = value.child("token").value.toString()
 
                     if(sebagai.trim() != sharedPref.getSebagai() && sebagai.trim()!="admin"){
-                        usersArrayList.add(UsersModel(id, nama, umur.toInt(), username, password, sebagai, token))
+                        usersArrayList.add(UsersModel(id, nama, umur, username, password, sebagai, token, adaChat))
                     }
                 }
-                konsultasiUserAdapter = ListKonsultasiUserAdapter(this@KonsultasiActivity, usersArrayList)
-                binding.rvListKonsultasiUser.layoutManager = LinearLayoutManager(this@KonsultasiActivity)
-                binding.rvListKonsultasiUser.adapter = konsultasiUserAdapter
-                konsultasiUserAdapter.notifyDataSetChanged()
+
+                setAdapter()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -78,13 +97,61 @@ class KonsultasiActivity : Activity() {
             }
 
         })
-        Log.d(TAG, "onDataChange: ${usersArrayList.size}")
+    }
 
-        binding.apply {
-            kontrolNavigationDrawer.cekSebagai(navView)
-            kontrolNavigationDrawer.onClickItemNavigationDrawer(navView, drawerLayoutMain, ivDrawerView, this@KonsultasiActivity)
+    private fun fetchMessageUser(){
+        databaseChat = FirebaseService().firebase().child("chats").child("message")
+        databaseChat.addValueEventListener(object: ValueEventListener{
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for(valuePertama in snapshot.children){
 
-        }
+                    var valueIdSent: String? = ""
+                    var valueIdReceived: String? = ""
+                    var valueKet: String? = ""
+
+                    for(valueKedua in valuePertama.children){
+                        val childIdSent = valuePertama.child("idSent").value.toString()
+                        val childIdReceived = valuePertama.child("idReceived").value.toString()
+                        val childKet = valuePertama.child("ket").value.toString()
+
+                        valueIdSent = childIdSent
+                        valueIdReceived = childIdReceived
+                        valueKet = childKet
+
+                    }
+
+                    Log.d(TAG, "data: aaaa")
+
+                    if(valueIdReceived == sharedPref.getId()){
+
+                        if(valueKet == "belum dibaca"){
+                            arrayCariChat.add(valueIdSent!!)
+                        }
+                    }
+                }
+
+                val sortData = arrayCariChat.toSet()
+                for (value in sortData){
+                    Log.d(TAG, "data: $value")
+                }
+                konsultasiUserAdapter.updateData(sortData)
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@KonsultasiActivity, "Gagal", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
+
+    private fun setAdapter(){
+        konsultasiUserAdapter = ListKonsultasiUserAdapter(this@KonsultasiActivity, usersArrayList)
+        binding.rvListKonsultasiUser.layoutManager = LinearLayoutManager(this@KonsultasiActivity)
+        binding.rvListKonsultasiUser.adapter = konsultasiUserAdapter
+
+        fetchMessageUser()
     }
 
     override fun onBackPressed() {

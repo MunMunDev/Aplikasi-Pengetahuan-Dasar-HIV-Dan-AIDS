@@ -1,12 +1,17 @@
 package com.example.rusly_aplikasipengetahuandasarhivdanaids.ui.activity.user
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.databinding.ActivityMainBinding
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.ui.activity.InformasiHivAidsActivity
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.ui.activity.KonsultasiActivity
@@ -15,11 +20,13 @@ import com.example.rusly_aplikasipengetahuandasarhivdanaids.utils.KontrolNavigat
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.utils.LoadingAlertDialog
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.utils.SharedPreferencesLogin
 
+
 class MainActivity : Activity() {
     lateinit var binding: ActivityMainBinding
     lateinit var sharedPref: SharedPreferencesLogin
     lateinit var loading: LoadingAlertDialog
     lateinit var kontrolNavigationDrawer: KontrolNavigationDrawer
+    private var NOTIFICATION_PERMISSION_CODE = 11
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -31,6 +38,22 @@ class MainActivity : Activity() {
         sharedPref = SharedPreferencesLogin(this@MainActivity)
         loading = LoadingAlertDialog(this@MainActivity)
         kontrolNavigationDrawer = KontrolNavigationDrawer(this@MainActivity)
+
+        getNotificationPermission()
+
+//        FirebaseMessaging.getInstance().deleteToken()
+//        FirebaseMessaging.getInstance().token.apply {
+//            addOnSuccessListener { p0 ->
+//                Log.d("messagingToken", "onSuccess: $p0")
+//                Toast.makeText(this@MainActivity, "baru: $p0", Toast.LENGTH_SHORT).show()
+//            }
+//            addOnCanceledListener {
+//                Toast.makeText(this@MainActivity, "Gagal Mendapatkan Token", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+
+        Log.d("messagingTokenData", "onCreate: ${sharedPref.getToken()}")
+//        Toast.makeText(this@MainActivity, "${sharedPref.getToken()}", Toast.LENGTH_SHORT).show()
 
         binding.apply {
             kontrolNavigationDrawer.cekSebagai(navView)
@@ -93,6 +116,43 @@ class MainActivity : Activity() {
 //                    }
 //                }
 //            }
+
+//            Toast.makeText(this@MainActivity, "${sharedPref.getToken()}", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    //Permission notifikasi android 13+
+    private fun getNotificationPermission() {
+        try {
+            if (Build.VERSION.SDK_INT > 32) {
+                ActivityCompat.requestPermissions(
+                    this, arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    NOTIFICATION_PERMISSION_CODE
+                )
+            }
+        } catch (e: Exception) {
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String?>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            NOTIFICATION_PERMISSION_CODE -> {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.size > 0 &&
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED
+                ) {
+                    // allow
+                } else {
+                    Toast.makeText(this@MainActivity, "Tidak dapat menerima notification", Toast.LENGTH_SHORT).show()
+                    //deny
+                }
+                return
+            }
         }
     }
 

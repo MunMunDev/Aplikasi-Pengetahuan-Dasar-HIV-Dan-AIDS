@@ -18,6 +18,7 @@ object ApiService {
         return retrofit.create(ApiConfig::class.java)
     }
 
+
     const val BASE_URL_MYSQL = "https://aplikasi-tugas.my.id/"
     fun getRetrofitMySql(): ApiConfig {
         val gson = GsonBuilder().setLenient().create()

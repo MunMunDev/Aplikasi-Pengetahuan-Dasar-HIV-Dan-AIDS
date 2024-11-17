@@ -157,7 +157,7 @@ class AdminSemuaUserDetailActivity : AppCompatActivity() {
 
         btnSimpan.setOnClickListener {
             loading.alertDialogLoading()
-            postUpdateData(dialogInputan, idUser!!, etNama.text.toString(), etUmur.text.toString().toInt(), etUsername.text.toString(), etPassword.text.toString(), sebagai, token, username)
+            postUpdateData(dialogInputan, idUser!!, etNama.text.toString(), etUmur.text.toString(), etUsername.text.toString(), etPassword.text.toString(), sebagai, token, username)
         }
         btnBatal.setOnClickListener {
             dialogInputan.dismiss()
@@ -165,7 +165,7 @@ class AdminSemuaUserDetailActivity : AppCompatActivity() {
     }
 
 
-    fun postUpdateData(dialogInputan: AlertDialog, id:String, nama: String, umur: Int, username: String, password: String, sebagai: String, token:String, usernameLama:String){
+    fun postUpdateData(dialogInputan: AlertDialog, id:String, nama: String, umur: String, username: String, password: String, sebagai: String, token:String, usernameLama:String){
         database.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 var cekUsernameTerdaftar = false

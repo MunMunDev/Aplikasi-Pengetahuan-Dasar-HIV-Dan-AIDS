@@ -19,6 +19,12 @@ class FirebaseConfig {
         database = setDatabase().child("information")
         return database
     }
+
+    fun fetchInformationGambar(): DatabaseReference{
+        database = setDatabase().child("information").child("gambar")
+        return database
+    }
+
     fun fetchPertanyaanOtomatis(): DatabaseReference{
         database = setDatabase().child("pertanyaan")
         return database

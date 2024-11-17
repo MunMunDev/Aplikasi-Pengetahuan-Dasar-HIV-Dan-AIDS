@@ -6,16 +6,22 @@ import android.content.Intent
 import android.os.Bundle
 import android.transition.AutoTransition
 import android.transition.TransitionManager
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.R
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.adapter.ListInformasiAdapter
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.data.database.firebase.FirebaseConfig
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.data.model.InformationDataModel
+import com.example.rusly_aplikasipengetahuandasarhivdanaids.data.model.InformationDataWithImageModel
+import com.example.rusly_aplikasipengetahuandasarhivdanaids.data.model.InformationGambarModel
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.databinding.ActivityInformasiHivAidsBinding
+import com.example.rusly_aplikasipengetahuandasarhivdanaids.databinding.AlertDialogShowImageBinding
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.ui.activity.user.MainActivity
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.utils.KontrolNavigationDrawer
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.utils.LoadingAlertDialog
@@ -31,6 +37,7 @@ class InformasiHivAidsActivity : Activity() {
     lateinit var kontrolNavigationDrawer: KontrolNavigationDrawer
     private var firebaseConfig = FirebaseConfig()
     private lateinit var adapter: ListInformasiAdapter
+    private lateinit var listInformationGambar : ArrayList<InformationGambarModel>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityInformasiHivAidsBinding.inflate(layoutInflater)
@@ -41,6 +48,7 @@ class InformasiHivAidsActivity : Activity() {
         sharedPref = SharedPreferencesLogin(this@InformasiHivAidsActivity)
         loading = LoadingAlertDialog(this@InformasiHivAidsActivity)
         setKontrolNavigationDrawer()
+        fetchImageInformation()
 //        viewSelengkapnya()
         fetchData()
     }
@@ -77,13 +85,34 @@ class InformasiHivAidsActivity : Activity() {
                     )
                 }
 
-                val sortedFromUrutan = listInformation.sortedWith(compareBy { it.urutan })
-                val list = arrayListOf<InformationDataModel>()
+                var listInformationWithImage: ArrayList<InformationDataWithImageModel> = arrayListOf()
+                for((no, value) in listInformation.withIndex()){
+                    val data = searchImageInformation(value.id!!)
+
+                    listInformationWithImage.add(
+                        InformationDataWithImageModel(
+                            value.id, value.urutan, value.judul, value.isi, data
+                        )
+                    )
+                }
+
+                for ((no, value) in listInformationWithImage.withIndex()){
+                    Log.d("DetailTAG", "id: ${value.id}")
+                    Log.d("DetailTAG", "urutan: ${value.urutan}")
+                    Log.d("DetailTAG", "judul: ${value.judul}")
+                    Log.d("DetailTAG", "isi: ${value.isi}")
+                    Log.d("DetailTAG", "data: ${value.arrayListImage!!.size}")
+                }
+
+//                val sortedFromUrutan = listInformation.sortedWith(compareBy { it.urutan })
+//                val list = arrayListOf<InformationDataModel>()
+//                list.addAll(sortedFromUrutan)
+//                setAdapter(list)
+
+                val sortedFromUrutan = listInformationWithImage.sortedWith(compareBy { it.urutan })
+                val list = arrayListOf<InformationDataWithImageModel>()
                 list.addAll(sortedFromUrutan)
                 setAdapter(list)
-
-//                Log.d("AdminInformasiHivAidsActivityTAG", "size: ${list.size}")
-//                Log.d("AdminInformasiHivAidsActivityTAG", "size: ${list.size}")
 
             }
 
@@ -94,14 +123,116 @@ class InformasiHivAidsActivity : Activity() {
         })
     }
 
-    private fun setAdapter(list: ArrayList<InformationDataModel>) {
-        adapter = ListInformasiAdapter(list)
+    private fun setAdapter(list: ArrayList<InformationDataWithImageModel>) {
+        adapter = ListInformasiAdapter(list, object : ListInformasiAdapter.OnClickItem{
+            override fun clickGambar(image: String, keterangan: String, it: View) {
+                setShowImage(image, keterangan)
+            }
+        })
         binding.apply {
             rvInformation.layoutManager = LinearLayoutManager(
                 this@InformasiHivAidsActivity, LinearLayoutManager.VERTICAL, false
             )
             rvInformation.adapter = adapter
         }
+    }
+    private fun setShowImage(gambar: String, title:String) {
+        val view = AlertDialogShowImageBinding.inflate(layoutInflater)
+
+        val alertDialog = AlertDialog.Builder(this@InformasiHivAidsActivity)
+        alertDialog.setView(view.root)
+            .setCancelable(false)
+        val dialogInputan = alertDialog.create()
+        dialogInputan.show()
+
+        view.apply {
+            tvTitle.text = "$title"
+            btnClose.setOnClickListener {
+                dialogInputan.dismiss()
+            }
+        }
+
+        Glide.with(this@InformasiHivAidsActivity)
+            .load("https://aplikasi-tugas.my.id/rusly/gambar/$gambar") // URL Gambar
+            .error(R.drawable.gambar_error_image)
+            .into(view.ivShowImage) // imageView mana yang akan diterapkan
+
+    }
+
+    private fun fetchImageInformation(){
+        firebaseConfig.fetchInformationGambar().addValueEventListener(object: ValueEventListener {
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onDataChange(snapshot: DataSnapshot) {
+                listInformationGambar = arrayListOf<InformationGambarModel>()
+                for(value in snapshot.children){
+                    var childIdInformation: String? = ""
+                    var childKeterangan: String? = ""
+                    var childGambar: String? = ""
+                    var childWaktu: String? = ""
+
+//                    id = value.child("id").value.toString()
+//                    keterangan = value.child("keterangan").value.toString()
+//                    gambar = value.child("gambar").value.toString()
+//                    waktu = value.child("waktu").value.toString()
+
+                    for(valueKedua in value.children){
+                        val valueIdInformation = value.child("id_information").value.toString()
+                        val valueKeterangan = value.child("keterangan").value.toString()
+                        val valueGambar = value.child("gambar").value.toString()
+                        val valueWaktu = value.child("waktu").value.toString()
+
+//                        if(valueIdInformation == id){
+//                            childIdInformation = valueIdInformation
+//                            childKeterangan = valueKeterangan
+//                            childGambar = valueGambar
+//                            childWaktu = valueWaktu
+//
+//                            Log.d("DetailTAG", "id: $childIdInformation, id2: $valueIdInformation")
+//                        }
+
+                        childIdInformation = valueIdInformation
+                        childKeterangan = valueKeterangan
+                        childGambar = valueGambar
+                        childWaktu = valueWaktu
+                    }
+                    if(childIdInformation!!.isNotEmpty()){
+                        listInformationGambar.add(
+                            InformationGambarModel(
+                                childIdInformation, childKeterangan, childGambar, childWaktu
+                            )
+                        )
+                    }
+                }
+
+                val sortedFromUrutan = listInformationGambar.sortedWith(compareBy { it.waktu })
+                val list = arrayListOf<InformationGambarModel>()
+                list.addAll(sortedFromUrutan)
+                listInformationGambar = arrayListOf()
+                listInformationGambar.addAll(list)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@InformasiHivAidsActivity, "Maaf, data gagal diambil", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun searchImageInformation(id:String):ArrayList<InformationGambarModel>{
+        val array : ArrayList<InformationGambarModel> = arrayListOf()
+        for(value in listInformationGambar){
+            if(value.id_information == id){
+                array.add(
+                    InformationGambarModel(
+                        value.id_information,
+                        value.keterangan,
+                        value.gambar,
+                        value.waktu
+                    )
+                )
+            }
+        }
+
+        return array
     }
 
 //    private fun viewSelengkapnya() {

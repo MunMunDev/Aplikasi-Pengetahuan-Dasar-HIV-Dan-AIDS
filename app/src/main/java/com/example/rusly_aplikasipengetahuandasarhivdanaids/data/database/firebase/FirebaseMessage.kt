@@ -2,13 +2,19 @@ package com.example.rusly_aplikasipengetahuandasarhivdanaids.data.database.fireb
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.R
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.data.model.PushNotificationModel
+import com.example.rusly_aplikasipengetahuandasarhivdanaids.ui.activity.ChatActivity
+import com.example.rusly_aplikasipengetahuandasarhivdanaids.ui.activity.KonsultasiActivity
+import com.example.rusly_aplikasipengetahuandasarhivdanaids.ui.activity.user.UpdateAkunActivity
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.utils.SharedPreferencesLogin
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.utils.ShowNotification
 import com.google.firebase.database.DataSnapshot
@@ -39,7 +45,7 @@ class FirebaseMessage: FirebaseMessagingService() {
                 database.child(sharedpref.getId()).child("token").setValue(token)
 
                 sharedpref.setLogin(sharedpref.getId(), sharedpref.getNama(),
-                    sharedpref.getUmur(), sharedpref.getUsername(),sharedpref.getPassword(),
+                    sharedpref.getUmur(), sharedpref.getEmail(), sharedpref.getUsername(), sharedpref.getPassword(),
                     sharedpref.getSebagai(), token)
             }
 
@@ -53,6 +59,8 @@ class FirebaseMessage: FirebaseMessagingService() {
     override fun onMessageReceived(message: RemoteMessage) {
 //        var dataGson =
         var dataGson = "${message.data};;;"
+        Log.d("MessageTAG", "onMessageReceived: $dataGson")
+
         try{
             super.onMessageReceived(message)
 //            dataGson = Gson().toJson(message.data)
@@ -68,27 +76,44 @@ class FirebaseMessage: FirebaseMessagingService() {
 
             val title = valueLimitTitle[1]
             val content = valueLimitContent[0]
+            val arrayContent = content.split(";-;")
+            val isiChat = arrayContent[0]
+            val id = arrayContent[1]
+            val token = arrayContent[2]
+
 
 //        ShowNotification().shotNotification(this, title, content)
 
+            var channelId = "channel_id_hiv_aids"
+
             val builder: NotificationCompat.Builder =
-                NotificationCompat.Builder(this, "Pengetahuan Dasar HIV AIDS 1")
+                NotificationCompat.Builder(this, channelId)
+
+
+            val i = Intent(this, ChatActivity::class.java)
+            i.putExtra("id", id)
+            i.putExtra("nama", title)
+            i.putExtra("token", token)
+//            val i = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.journaldev.com/"))
+            val p = PendingIntent.getActivity(this, 0, i,
+                PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_MUTABLE)
 
             builder.apply {
                 setSmallIcon(R.drawable.logo_nurse)
                 setContentTitle(title)
-                setContentText(content)
+                setContentText(isiChat)
                 setPriority(NotificationCompat.PRIORITY_MAX)
+                setContentIntent(p)
             }
+
 
             val manager: NotificationManager =
                 this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                var channelId = "Pengetahuan Dasar HIV AIDS 2"
                 var channel = NotificationChannel(
                     channelId,
-                    "Pengetahuan Dasar HIV AIDS 3",
+                    "channel_id_hiv_aids",
                     NotificationManager.IMPORTANCE_HIGH
                 )
                 manager.createNotificationChannel(channel)

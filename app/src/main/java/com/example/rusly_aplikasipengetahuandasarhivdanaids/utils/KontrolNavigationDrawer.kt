@@ -10,6 +10,7 @@ import android.widget.ImageView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.R
+import com.example.rusly_aplikasipengetahuandasarhivdanaids.data.database.firebase.FirebaseService
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.ui.activity.*
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.ui.activity.admin.AdminInformasiHivAidsActivity
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.ui.activity.admin.AdminMainActivity
@@ -18,6 +19,7 @@ import com.example.rusly_aplikasipengetahuandasarhivdanaids.ui.activity.admin.Ad
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.ui.activity.admin.AdminSemuaUserActivity
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.ui.activity.user.MainActivity
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.ui.activity.user.UpdateAkunActivity
+import com.google.firebase.database.DatabaseReference
 
 class KontrolNavigationDrawer(var context: Context) {
     var sharedPreferences = SharedPreferencesLogin(context)
@@ -123,13 +125,8 @@ class KontrolNavigationDrawer(var context: Context) {
                         context.startActivity(intent)
                         activity.finish()
                     }
-                    R.id.adminNavDrawerUser ->{
-                        val intent = Intent(Intent(context, AdminSemuaUserActivity::class.java))
-                        context.startActivity(intent)
-                        activity.finish()
-                    }
-//                    R.id.adminNavDrawerSettings ->{
-//                        val intent = Intent(context, MainActivity::class.java)
+//                    R.id.adminNavDrawerUser ->{
+//                        val intent = Intent(Intent(context, AdminSemuaUserActivity::class.java))
 //                        context.startActivity(intent)
 //                        activity.finish()
 //                    }
@@ -158,8 +155,14 @@ class KontrolNavigationDrawer(var context: Context) {
         dialog.show()
         btnLogout.setOnClickListener {
 //            sharedPreferences.setLogin(0, 0, "", "", "")
-            sharedPreferences.setLogin( "","", 0, "", "", "", "")
+            val id = sharedPreferences.getId()
+            val database : DatabaseReference = FirebaseService().firebase().child("users")
+            database.child(id).child("token").setValue("")
+
+            sharedPreferences.setLogin( "","", 0, "", "", "", "", "")
             context.startActivity(Intent(context, LoginActivity::class.java))
+
+
             activity.finish()
         }
         btnBatalLogout.setOnClickListener {

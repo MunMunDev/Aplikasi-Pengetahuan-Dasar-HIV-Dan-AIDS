@@ -82,9 +82,9 @@ class ChatActivity : Activity() {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(view)
 
-        fetchChatKonsultasi()
-        fetchChatPertanyaanOtomatis()
-        fetchtPertanyaanOtomatis()
+//        fetchChatKonsultasi()
+//        fetchChatPertanyaanOtomatis()
+//        fetchtPertanyaanOtomatis()
         fetchDataSebelumnya()
         setCheckJamOperasional()
         setButton()
@@ -102,7 +102,11 @@ class ChatActivity : Activity() {
                 llChatOtomatis.visibility = View.GONE
                 svPertanyaanOtomatis.visibility = View.GONE
 
+                fetchChatKonsultasi()
                 etMessage.requestFocus()
+            } else{
+                fetchChatPertanyaanOtomatis()
+                fetchtPertanyaanOtomatis()
             }
         }
     }
@@ -112,9 +116,13 @@ class ChatActivity : Activity() {
             val bundle = intent.extras
             sharedPref = SharedPreferencesLogin(this@ChatActivity)
             idSent = sharedPref.getId()
-            idReceived = bundle!!.getString("id").toString()
-            nama = bundle!!.getString("nama").toString()
-            token = bundle!!.getString("token").toString()
+            bundle!!.apply {
+                idReceived = this.getString("id").toString()
+                nama = this.getString("nama").toString()
+                token = this.getString("token").toString()
+
+//                Toast.makeText(this@ChatActivity, "$token", Toast.LENGTH_SHORT).show()
+            }
 
             tvNamaDokter.text = nama
         }
@@ -122,6 +130,7 @@ class ChatActivity : Activity() {
     private fun setButton() {
         binding.apply {
             ivBack.setOnClickListener{
+                startActivity(Intent(this@ChatActivity, KonsultasiActivity::class.java))
                 finish()
             }
 
@@ -139,6 +148,8 @@ class ChatActivity : Activity() {
                 svPertanyaanOtomatis.visibility = View.GONE
                 rvListKonsultasiChatDokter.visibility = View.VISIBLE
 
+                fetchChatKonsultasi()
+
                 etMessage.requestFocus()
             }
 
@@ -153,7 +164,14 @@ class ChatActivity : Activity() {
             btnSendMessage.setOnClickListener {
                 if(etMessage.text.trim().isNotEmpty()){
                     // Kirim data
-                    postMessageToDatabase(senderRoom!!, etMessage.text.toString().trim(), "")
+                    val id = hurufAcakLagi()
+                    Log.d("$TAG-iooi", "waktu: ${waktuSekarangMakasar()}")
+                    Log.d("$TAG-iooi", "tanggal: ${tanggalSekarangMakassar()}")
+
+                    Log.d("$TAG-iooi", "waktu: ${waktuSekarangZonaMakassar()}")
+                    Log.d("$TAG-iooi", "tanggal: ${tanggalSekarangZonaMakassar()}")
+//                    postMessageToDatabase(senderRoom!!, etMessage.text.toString().trim(), "")
+                    postMessageToDatabase(id, etMessage.text.toString().trim(), "")
                 }
             }
         }
@@ -164,6 +182,7 @@ class ChatActivity : Activity() {
         message: String,
         gambar: String
     ){
+        database = FirebaseService().firebase().child("chats").child("message")
         database.addListenerForSingleValueEvent(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 database.child("$id").child("idMessage").setValue(id)
@@ -176,13 +195,14 @@ class ChatActivity : Activity() {
                 database.child("$id").child("ket").setValue("belum dibaca")
 
                 if(gambar.trim().isEmpty()){
-                    postMessage(sharedPref.getNama(), message, token.toString())
+                    val valueMessage = "$message;-;${sharedPref.getId()};-;${sharedPref.getToken()}"
+                    postMessage(sharedPref.getNama(), valueMessage, token.toString())
                     binding.etMessage.text = null
                 } else{
                     postMessage(sharedPref.getNama(), "Ada Gambar Diterima", token.toString())
                 }
 
-                hurufAcak()
+//                hurufAcak()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -195,7 +215,7 @@ class ChatActivity : Activity() {
     private fun setCheckJamOperasional() {
         val waktuZonaMakassar = waktuSekarangZonaMakassar().split(":")
         val jam = waktuZonaMakassar[0].trim().toInt()
-        if(jam.toLong() >= 8.toLong() && jam.toLong() <= 16.toLong()){
+        if(jam.toLong() >= 17.toLong() && jam.toLong() <= 22.toLong()){
             binding.apply {
                 llMessage.visibility = View.VISIBLE
                 llDontSendMessage.visibility = View.GONE
@@ -255,7 +275,10 @@ class ChatActivity : Activity() {
                             valueWaktu = childWaktu
                             valueKet = childWaktu
                         }
-
+                    }
+                    if (sharedPref.getId() == valueIdReceived){
+//                            Log.d(TAG, "update: $childMessage")
+                        database.child("$valueIdMessage").child("ket").setValue("sudah dibaca")
                     }
                     if(valueIdSent!!.isNotEmpty() && valueIdReceived!!.isNotEmpty()){
                         messageArrayList.add(
@@ -370,6 +393,7 @@ class ChatActivity : Activity() {
             rvListChatPertanyaan.layoutManager = LinearLayoutManager(this@ChatActivity)
             rvListChatPertanyaan.adapter = chatOtomatisAdapter
             rvListChatPertanyaan.scrollToPosition(list.size-1)
+
             chatOtomatisAdapter.notifyDataSetChanged()
         }
     }
@@ -430,8 +454,7 @@ class ChatActivity : Activity() {
         binding.apply {
             rvListPertanyaanOtomatis.layoutManager = LinearLayoutManager(this@ChatActivity)
             rvListPertanyaanOtomatis.adapter = pertanyaanOtomatisAdapter
-            rvListPertanyaanOtomatis.scrollToPosition(sorted.size-1)
-            svPertanyaanOtomatis.fullScroll(sorted.size)
+//            rvListPertanyaanOtomatis.scrollToPosition(sorted.size-1)
         }
         pertanyaanOtomatisAdapter.notifyDataSetChanged()
     }
@@ -461,6 +484,11 @@ class ChatActivity : Activity() {
         this.senderRoom = "${dateTime}--$idSent--$idReceived"
         this.receivedRoom = "${dateTime}--$idReceived--$idSent"
     }
+    fun hurufAcakLagi(): String {
+
+        val dateTime = "${tanggalSekarangZonaMakassar()}-${waktuSekarangZonaMakassar()}"
+        return "${dateTime}--$idSent--$idReceived"
+    }
 
     fun tanggalSekarang():String{
         val calendar: Calendar = Calendar.getInstance()
@@ -477,6 +505,26 @@ class ChatActivity : Activity() {
         calendar.timeZone = TimeZone.getTimeZone("Asia/Jakarta")
         val simpleDateFormat = SimpleDateFormat("HH:mm:ss")
         simpleDateFormat.timeZone = TimeZone.getTimeZone("Asia/Jakarta")
+        val time = simpleDateFormat.format(calendar.time)
+
+        return time
+    }
+
+    fun tanggalSekarangMakassar():String{
+        val calendar: Calendar = Calendar.getInstance()
+        calendar.timeZone = TimeZone.getTimeZone("Asia/Makassar")
+        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
+        simpleDateFormat.timeZone = TimeZone.getTimeZone("Asia/Makassar")
+        val dateTime = simpleDateFormat.format(calendar.time)
+
+        return dateTime
+    }
+
+    fun waktuSekarangMakasar():String{
+        val calendar: Calendar = Calendar.getInstance()
+        calendar.timeZone = TimeZone.getTimeZone("Asia/Makassar")
+        val simpleDateFormat = SimpleDateFormat("HH:mm:ss")
+        simpleDateFormat.timeZone = TimeZone.getTimeZone("Asia/Makassar")
         val time = simpleDateFormat.format(calendar.time)
 
         return time
@@ -533,7 +581,7 @@ class ChatActivity : Activity() {
     }
 
     fun postMessage(valueNama:String, valueMessage:String, token: String){
-        ApiService.getRetrofit().postChat(PushNotificationModel(NotificationModel(valueNama,valueMessage), token))
+        ApiService.getRetrofit().postChat(PushNotificationModel(NotificationModel(valueNama, valueMessage), token))
             .enqueue(object: Callback<PushNotificationModel> {
                 override fun onResponse(
                     call: Call<PushNotificationModel>,
@@ -674,4 +722,9 @@ class ChatActivity : Activity() {
         }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startActivity(Intent(this@ChatActivity, KonsultasiActivity::class.java))
+        finish()
+    }
 }

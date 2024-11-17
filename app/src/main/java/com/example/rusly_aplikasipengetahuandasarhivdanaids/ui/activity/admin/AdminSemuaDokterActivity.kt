@@ -67,10 +67,10 @@ class AdminSemuaDokterActivity : AppCompatActivity() {
                     val token = value.child("token").value.toString()
 
                     if(sebagai.trim() == "dokter"){
-                        usersArrayList.add(UsersModel(id, nama, umur.toInt(), username, password, sebagai, token))
+                        usersArrayList.add(UsersModel(id, nama, umur, username, password, sebagai, token))
                     }
                 }
-                Log.d("AdminSemuaUserActivityTAG", "onDataChange: $usersArrayList")
+                Log.d("AdminSemuaUserTAG", "onDataChange: $usersArrayList")
 
                 semuaUserAdapter = AdminListSemuaUserAdapter(usersArrayList, object : AdminListSemuaUserAdapter.onClick{
                     override fun ClickItem(data: UsersModel, it: View) {

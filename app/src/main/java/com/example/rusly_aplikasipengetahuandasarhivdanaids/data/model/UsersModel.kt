@@ -12,7 +12,10 @@ class UsersModel(
     var nama: String? = null,
 
     @SerializedName("umur")
-    var umur: Int? = null,
+    var umur: String? = null,
+
+    @SerializedName("email")
+    var email: String? = null,
 
     @SerializedName("username")
     var username: String? = null,
@@ -25,11 +28,16 @@ class UsersModel(
 
     @SerializedName("token")
     var token: String? = null,
+
+    @SerializedName("dibaca")
+    var dibaca: String? = null,
+
 ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readString(),
-        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readString(),
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -45,6 +53,7 @@ class UsersModel(
         parcel.writeString(password)
         parcel.writeString(sebagai)
         parcel.writeString(token)
+        parcel.writeString(dibaca)
     }
 
     override fun describeContents(): Int {

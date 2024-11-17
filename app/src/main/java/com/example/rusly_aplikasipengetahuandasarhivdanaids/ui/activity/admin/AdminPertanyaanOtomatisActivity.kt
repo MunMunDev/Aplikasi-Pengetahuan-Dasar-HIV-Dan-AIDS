@@ -1,6 +1,7 @@
 package com.example.rusly_aplikasipengetahuandasarhivdanaids.ui.activity.admin
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
@@ -304,5 +305,11 @@ class AdminPertanyaanOtomatisActivity : AppCompatActivity() {
                 dialogInputan.dismiss()
             }
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startActivity(Intent(this@AdminPertanyaanOtomatisActivity, AdminMainActivity::class.java))
+        finish()
     }
 }

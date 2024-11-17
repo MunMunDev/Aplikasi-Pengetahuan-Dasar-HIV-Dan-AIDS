@@ -52,6 +52,7 @@ class UpdateAkunActivity : Activity() {
             var id = sharedPref.getId().trim()
             var nama = ""
             var umur = ""
+            var email = ""
             var username = ""
             var password = ""
             var sebagai = sharedPref.getSebagai()
@@ -61,11 +62,13 @@ class UpdateAkunActivity : Activity() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     nama = snapshot.child("nama").value.toString()
                     umur = snapshot.child("umur").value.toString()
+                    email = snapshot.child("email").value.toString()
                     username = snapshot.child("username").value.toString()
                     password = snapshot.child("password").value.toString()
 
                     etNama.setText(nama)
                     etUmur.setText(umur)
+                    etEmail.setText(email)
                     etUsername.setText(username)
                     etPassword.setText(password)
                     Log.d(TAG, "onDataChange: nama: ${nama}, umur: $umur, username: $username, password: $password")
@@ -77,16 +80,17 @@ class UpdateAkunActivity : Activity() {
             })
 
             btnUbahData.setOnClickListener {
-                dialogUpdateData(nama, umur.toInt(), username, password, sebagai, token)
+                dialogUpdateData(nama, umur.toInt(), email, username, password, sebagai, token)
             }
         }
     }
 
-    fun dialogUpdateData(nama: String, umur: Int, username: String, password: String, sebagai: String, token: String){
+    fun dialogUpdateData(nama: String, umur: Int, email: String, username: String, password: String, sebagai: String, token: String){
         val viewAlertDialog = View.inflate(this@UpdateAkunActivity, R.layout.alert_dialog_update_akun, null)
 
         val etNama = viewAlertDialog.findViewById<TextView>(R.id.etNama)
         val etUmur = viewAlertDialog.findViewById<TextView>(R.id.etUmur)
+        val etEmail = viewAlertDialog.findViewById<TextView>(R.id.etEmail)
         val etUsername = viewAlertDialog.findViewById<TextView>(R.id.etUsername)
         val etPassword = viewAlertDialog.findViewById<TextView>(R.id.etPassword)
         val btnShowPassword = viewAlertDialog.findViewById<ImageView>(R.id.btnShowPassword)
@@ -97,6 +101,7 @@ class UpdateAkunActivity : Activity() {
 
         etNama.text = nama
         etUmur.text = umur.toString()
+        etEmail.text = email
         etUsername.text = username
         etPassword.text = password
 
@@ -119,7 +124,7 @@ class UpdateAkunActivity : Activity() {
 
         btnSimpan.setOnClickListener {
             loading.alertDialogLoading()
-            postUpdateData(dialogInputan, sharedPref.getId(), etNama.text.toString(), etUmur.text.toString().toInt(), etUsername.text.toString(), etPassword.text.toString(), sebagai, token, username)
+            postUpdateData(dialogInputan, sharedPref.getId(), etNama.text.toString(), etUmur.text.toString().toInt(), etEmail.text.toString(), etUsername.text.toString(), etPassword.text.toString(), sebagai, token, username)
         }
         btnBatal.setOnClickListener {
             dialogInputan.dismiss()
@@ -127,11 +132,12 @@ class UpdateAkunActivity : Activity() {
     }
 
 
-    fun postUpdateData(dialogInputan:AlertDialog, id:String, nama: String, umur: Int, username: String, password: String, sebagai: String, token:String, usernameLama:String){
+    fun postUpdateData(dialogInputan:AlertDialog, id:String, nama: String, umur: Int, email: String, username: String, password: String, sebagai: String, token:String, usernameLama:String){
         val map: HashMap<String, Any> = HashMap()
         map.put("id", id)
         map.put("nama", nama)
         map.put("umur", umur)
+        map.put("email", email)
         map.put("username", username)
         map.put("password", password)
         map.put("sebagai", sebagai)
@@ -160,12 +166,13 @@ class UpdateAkunActivity : Activity() {
                         database.child(id).child("id").setValue(id)
                         database.child(id).child("nama").setValue(nama)
                         database.child(id).child("umur").setValue(umur)
+                        database.child(id).child("email").setValue(email)
                         database.child(id).child("username").setValue(username)
                         database.child(id).child("password").setValue(password)
                         database.child(id).child("sebagai").setValue(sebagai)
                         database.child(id).child("token").setValue(token)
 
-                        sharedPref.setLogin(id, nama, umur, username, password, sebagai, token)
+                        sharedPref.setLogin(id, nama, umur, email, username, password, sebagai, token)
                         Toast.makeText(this@UpdateAkunActivity, "Berhasil Update data", Toast.LENGTH_SHORT).show()
                         dialogInputan.dismiss()
                         loading.alertDialogCancel()
@@ -175,6 +182,7 @@ class UpdateAkunActivity : Activity() {
                     database.child(id).child("id").setValue(id)
                     database.child(id).child("nama").setValue(nama)
                     database.child(id).child("umur").setValue(umur)
+                    database.child(id).child("email").setValue(email)
                     database.child(id).child("username").setValue(username)
                     database.child(id).child("password").setValue(password)
                     database.child(id).child("sebagai").setValue(sebagai)

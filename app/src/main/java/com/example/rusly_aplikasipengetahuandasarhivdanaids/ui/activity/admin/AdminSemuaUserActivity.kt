@@ -67,7 +67,7 @@ class AdminSemuaUserActivity : AppCompatActivity() {
                     val token = value.child("token").value.toString()
 
                     if(sebagai.trim() == "user"){
-                        usersArrayList.add(UsersModel(id, nama, umur.toInt(), username, password, sebagai, token))
+                        usersArrayList.add(UsersModel(id, nama, umur, username, password, sebagai, token))
                     }
                 }
                 Log.d("AdminSemuaUserTAG", "onDataChange: $usersArrayList")

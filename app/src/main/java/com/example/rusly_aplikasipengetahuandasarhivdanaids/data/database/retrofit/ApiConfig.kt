@@ -36,4 +36,20 @@ interface ApiConfig {
         @Part("nama") nama: RequestBody,
     ): Call<ArrayList<ResponseModel>>
 
+    @Multipart
+    @POST("rusly/upload_gambar.php")
+    fun postAdminTambahGambarInformation(
+        @Part("post_gambar_chat") post_gambar_chat: RequestBody,
+        @Part("nama") nama: RequestBody,
+        @Part file_image: MultipartBody.Part,
+    ): Call<ArrayList<ResponseModel>>
+
+    @FormUrlEncoded
+    @POST("rusly/send_email.php")
+    fun postLupaAkun(
+        @Field("send_email_password") send_email_password: String,
+        @Field("email") email: String,
+        @Field("username") username: String,
+        @Field("password") password: String,
+    ): Call<ArrayList<ResponseModel>>
 }

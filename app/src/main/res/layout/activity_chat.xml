@@ -85,7 +85,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@id/tvInfoDontSendMessage"
             android:layout_marginBottom="2dp"
-            android:text="Jam Operasional Jam 08.00 - 16.00 WITA"
+            android:text="Konsultasikan Dengan Dokter Jam 17.00 - 22.00 WITA"
             android:textSize="14sp"
             android:textColor="@color/abuabu_tua"
             android:textStyle="italic"
@@ -191,13 +191,14 @@
         android:layout_marginEnd="1dp"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="80dp"
-        android:visibility="visible">
+        android:visibility="visible"
+        >
         <LinearLayout
             android:id="@+id/clPertanyaanOtomatis"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginEnd="40dp"
-            android:orientation="vertical" >
+            android:orientation="vertical">
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvListChatPertanyaan"
                 android:layout_width="match_parent"

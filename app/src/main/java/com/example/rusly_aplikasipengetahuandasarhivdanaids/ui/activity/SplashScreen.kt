@@ -38,16 +38,16 @@ class SplashScreen : Activity() {
 
         FirebaseMessaging.getInstance().token.apply {
             addOnSuccessListener { p0 ->
-                Log.d("messagingToken", "onSuccess: $p0")
-
                 var valueId = sharedPref.getId()
 
                 database.child(valueId).addListenerForSingleValueEvent(object: ValueEventListener{
                     override fun onDataChange(snapshot: DataSnapshot) {
                         if(snapshot.child("id").value != null){
+
                             val id = snapshot.child("id").value.toString()
                             val nama = snapshot.child("nama").value.toString()
                             val umur = snapshot.child("umur").value.toString()
+                            val email = snapshot.child("email").value.toString()
                             val username = snapshot.child("username").value.toString()
                             val password = snapshot.child("password").value.toString()
                             val sebagai = snapshot.child("sebagai").value.toString()
@@ -56,13 +56,14 @@ class SplashScreen : Activity() {
                             database.child(valueId).child("id").setValue(id)
                             database.child(valueId).child("nama").setValue(nama)
                             database.child(valueId).child("umur").setValue(umur)
+                            database.child(valueId).child("email").setValue(email)
                             database.child(valueId).child("username").setValue(username)
                             database.child(valueId).child("password").setValue(password)
                             database.child(valueId).child("sebagai").setValue(sebagai)
                             database.child(valueId).child("token").setValue(p0)
 
                             sharedPref.setLogin(
-                                id, nama, umur.trim().toInt(),
+                                id, nama, umur.trim().toInt(), email,
                                 username, password, sebagai, token
                             )
 
@@ -113,13 +114,13 @@ class SplashScreen : Activity() {
 //                    }
                 }
                 else{
-                    sharedPref.setLogin("", "", 0, "", "", "", "")
+                    sharedPref.setLogin("", "", 0, "", "", "", "", "")
                     startActivity(Intent(this@SplashScreen, LoginActivity::class.java))
                     finish()
                 }
             }
             else{
-                sharedPref.setLogin("", "", 0, "", "", "", "")
+                sharedPref.setLogin("", "", 0, "", "", "", "", "")
                 startActivity(Intent(this@SplashScreen, LoginActivity::class.java))
                 finish()
             }

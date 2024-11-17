@@ -2,6 +2,7 @@ package com.example.rusly_aplikasipengetahuandasarhivdanaids.utils
 
 import android.view.View
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.data.model.InformationDataModel
+import com.example.rusly_aplikasipengetahuandasarhivdanaids.data.model.InformationGambarModel
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.data.model.PertanyaanOtomatisModel
 
 interface OnClickItem {
@@ -9,6 +10,13 @@ interface OnClickItem {
         fun clickItemSetting(information: InformationDataModel, it: View)
         fun clickItemJudul(judul: String, it: View)
         fun clickItemIsi(isi: String, it: View)
+        fun clickItemGambar(idInformation: String, judul: String, it: View)
+    }
+
+    interface AdminInformationGambar{
+        fun clickItemSetting(information: InformationGambarModel, it: View)
+        fun clickItemKeterangan(keterangan: String, it: View)
+        fun clickItemGambar(gambar: String, keterangan: String, it: View)
     }
 
     interface AdminPertanyaanOtomatis{

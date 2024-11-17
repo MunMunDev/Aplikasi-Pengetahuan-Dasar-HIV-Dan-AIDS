@@ -1,6 +1,7 @@
 package com.example.rusly_aplikasipengetahuandasarhivdanaids.ui.activity.admin
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -193,6 +194,13 @@ class AdminInformasiHivAidsActivity : AppCompatActivity() {
                 setShowIsi(isi)
             }
 
+            override fun clickItemGambar(idInformation: String, judul: String, it: View) {
+                var i = Intent(this@AdminInformasiHivAidsActivity, AdminInformasiGambarActivity::class.java)
+                i.putExtra("idInformation", idInformation)
+                i.putExtra("judul", judul)
+                startActivity(i)
+            }
+
         })
         binding.apply {
             rvInformasi.layoutManager = LinearLayoutManager(
@@ -327,5 +335,9 @@ class AdminInformasiHivAidsActivity : AppCompatActivity() {
         }
     }
 
-
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startActivity(Intent(this@AdminInformasiHivAidsActivity, AdminMainActivity::class.java))
+        finish()
+    }
 }
