@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.R
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.adapter.ListInformasiAdapter
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.data.database.firebase.FirebaseConfig
+import com.example.rusly_aplikasipengetahuandasarhivdanaids.data.database.retrofit.ApiService
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.data.model.InformationDataModel
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.data.model.InformationDataWithImageModel
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.data.model.InformationGambarModel
@@ -78,11 +79,14 @@ class InformasiHivAidsActivity : Activity() {
                     judul = value.child("judul").value.toString()
                     isi = value.child("isi").value.toString()
 
-                    listInformation.add(
-                        InformationDataModel(
-                            id, urutan, judul, isi
+                    if(id != "null"){
+                        listInformation.add(
+                            InformationDataModel(
+                                id, urutan, judul, isi
+                            )
                         )
-                    )
+                    }
+
                 }
 
                 var listInformationWithImage: ArrayList<InformationDataWithImageModel> = arrayListOf()
@@ -153,7 +157,7 @@ class InformasiHivAidsActivity : Activity() {
         }
 
         Glide.with(this@InformasiHivAidsActivity)
-            .load("https://aplikasi-tugas.my.id/rusly/gambar/$gambar") // URL Gambar
+            .load("${ApiService.BASE_URL_MYSQL}/rusly/gambar/$gambar") // URL Gambar
             .error(R.drawable.gambar_error_image)
             .into(view.ivShowImage) // imageView mana yang akan diterapkan
 

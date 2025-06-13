@@ -98,7 +98,7 @@ class MessageKonsultasiAdapter(val context: Context, val messageList: List<Messa
             //Tampilkan Gambar Dikirim
             val viewHolder = holder as SentViewHolderGambar
             Glide.with(holder.itemView)
-                .load("https://aplikasi-tugas.my.id/rusly/gambar/${list.gambar}") // URL Gambar
+                .load("${ApiService.BASE_URL_MYSQL}/rusly/gambar/${list.gambar}") // URL Gambar
                 .error(R.drawable.gambar_error_image)
                 .into(viewHolder.sentMessageGambar) // imageView mana yang akan diterapkan
 
@@ -124,7 +124,7 @@ class MessageKonsultasiAdapter(val context: Context, val messageList: List<Messa
             //Tampilkan Gambar Diterima
             val viewHolder = holder as ReceivedViewHolderGambar
             Glide.with(holder.itemView)
-                .load("https://aplikasi-tugas.my.id/rusly/gambar/${list.gambar}") // URL Gambar
+                .load("${ApiService.BASE_URL_MYSQL}/rusly/gambar/${list.gambar}") // URL Gambar
                 .error(R.drawable.gambar_error_image)
                 .into(viewHolder.receivedMessageGambar) // imageView mana yang akan diterapkan
         }

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.R
+import com.example.rusly_aplikasipengetahuandasarhivdanaids.data.database.retrofit.ApiService
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.data.model.InformationDataModel
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.data.model.InformationGambarModel
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.databinding.ListAdminInformasiBinding
@@ -79,7 +80,7 @@ class AdminListInformasiGambarAdapter(
                 ivGambar.visibility = View.VISIBLE
 
                 Glide.with(holder.itemView)
-                    .load("https://aplikasi-tugas.my.id/rusly/gambar/${information.gambar}") // URL Gambar
+                    .load("${ApiService.BASE_URL_MYSQL}/rusly/gambar/${information.gambar}") // URL Gambar
                     .error(R.drawable.gambar_error_image)
                     .into(holder.binding.ivGambar) // imageView mana yang akan diterapkan
 

@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.R
+import com.example.rusly_aplikasipengetahuandasarhivdanaids.data.database.retrofit.ApiService
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.data.model.InformationGambarModel
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.databinding.ListGambarBinding
 
@@ -28,7 +29,7 @@ class ImageAdapter(
         val list = listGambar[position]
         holder.binding.apply {
             Glide.with(holder.itemView)
-                .load("https://aplikasi-tugas.my.id/rusly/gambar/${list.gambar}") // URL Gambar
+                .load("${ApiService.BASE_URL_MYSQL}/rusly/gambar/${list.gambar}") // URL Gambar
                 .error(R.drawable.gambar_error_image)
                 .into(ivGambarInformation) // imageView mana yang akan diterapkan
 

@@ -24,7 +24,7 @@
     <string name="title_keterangan_tentang_aplikasi">Keterangan</string>
     <string name="keterangan_tentang_aplikasi"> Aplikasi ini merupakan platform yang menyediakan informasi mengenai HIV/AIDS,
         meliputi pengertian, sejarah, gejala, penularan, metode tes, pencegahan, dan pengobatan. Selain itu, aplikasi ini juga dilengkapi dengan
-        fitur konsultasi dokter untuk memberikan kesempatan kepada pengguna untuk berkonsultasi secara langsung dengan dokter/konselor  terkait masalah HIV/AIDS
+        fitur konsultasi konselor untuk memberikan kesempatan kepada pengguna untuk berkonsultasi secara langsung dengan dokter/konselor  terkait masalah HIV/AIDS
         yang mereka alami, serta menyediakan data terbaru mengenai HIV/AIDS
     </string>
 
@@ -98,9 +98,9 @@
     <string name="teks_full_pengobatan_hiv_aids">Pengobatan HIV/AIDS didasarkan pada penggunaan terapi antiretroviral (ARV). Terapi antiretroviral adalah kombinasi dari beberapa obat yang bertujuan untuk menekan perkembangan virus HIV dalam tubuh dan menjaga sistem kekebalan tubuh tetap kuat. Pengobatan ini telah terbukti sangat efektif dalam memperlambat perkembangan HIV, mengurangi tingkat replikasi virus, dan meningkatkan harapan hidup orang yang hidup dengan HIV/AIDS. \n
         Pengobatan HIV/AIDS biasanya terdiri dari tiga obat antiretroviral atau lebih yang dikombinasikan dalam apa yang disebut sebagai Terapi Antiretroviral Kombinasi (Highly Active Antiretroviral Therapy - HAART). Pengobatan ini dirancang untuk menargetkan virus HIV dari berbagai sisi, sehingga lebih efektif dalam menekan perkembangan virus dan mengurangi risiko resistensi obat. \n
         Berikut adalah beberapa poin penting mengenai pengobatan HIV/AIDS: \n
-        1)	Kepatuhan: Kepatuhan dalam mengikuti jadwal dan dosis obat adalah kunci keberhasilan terapi antiretroviral. Penting untuk mengikuti instruksi dokter dengan disiplin untuk memaksimalkan efektivitas pengobatan. \n
-        2)	Monitoring Rutin: Orang yang hidup dengan HIV/AIDS perlu menjalani tes darah secara rutin untuk memantau tingkat virus dan kesehatan umum mereka. Hal ini membantu dokter memantau respon terhadap pengobatan dan membuat perubahan jika diperlukan. \n
-        3)	Efek Samping: Beberapa obat antiretroviral dapat menimbulkan efek samping. Dokter akan membantu memantau dan mengelola efek samping yang mungkin timbul. \n
+        1)	Kepatuhan: Kepatuhan dalam mengikuti jadwal dan dosis obat adalah kunci keberhasilan terapi antiretroviral. Penting untuk mengikuti instruksi konselor dengan disiplin untuk memaksimalkan efektivitas pengobatan. \n
+        2)	Monitoring Rutin: Orang yang hidup dengan HIV/AIDS perlu menjalani tes darah secara rutin untuk memantau tingkat virus dan kesehatan umum mereka. Hal ini membantu konselor memantau respon terhadap pengobatan dan membuat perubahan jika diperlukan. \n
+        3)	Efek Samping: Beberapa obat antiretroviral dapat menimbulkan efek samping. Konselor akan membantu memantau dan mengelola efek samping yang mungkin timbul. \n
         4)	Pengobatan pada Tahap Awal: Semakin dini seseorang memulai pengobatan setelah diagnosis HIV, semakin baik peluang untuk mengelola virus dengan baik dan mencegah perkembangan AIDS. \n
         5)	Pengobatan untuk Penyakit Terkait AIDS: Selain terapi antiretroviral, pengobatan juga diberikan untuk mengatasi infeksi oportunistik dan penyakit terkait AIDS lainnya. \n
         6)	Pencegahan Penularan: Pengobatan HIV/AIDS yang efektif juga dapat membantu mengurangi risiko penularan HIV ke orang lain. \n \n
@@ -120,8 +120,8 @@
         Tempat yang ramai atau sirkulasi udaranya kurang baik merupakan lingkungan yang banyak dihuni kuman. Hindari tempat-tempat seperti ini supaya penderita tidak mudah terkena penyakit, tempatlain seperti rumah sakit,klinik,dan penjara rentan terhadap banyak kuman. \n
         5)	Hindari penggunaan jarum suntik, merokok, dan mengonsumsi alcohol \n
         Penderita HIV akan lebih mudah terkena infeksi TB jika mengonsumsi alcohol dan menggunakan jarum suntik narkotika. \n
-        6)	Mengonsumsi obat profilaksis dari dokter \n
-        Dokter dapat memberikan antibiotik seperti klaritomsin dan azitromisin jika jumlah sel CD4 anda dibawa 50 untuk mencegah MAC. Ketika jumlah sel CD4 sudah diatas 100 untuk 6 bulan, anda mungkin dapat menghentikan pemakaian antibiotik. Pemakaian obat profilaksis juga dapat mencegah infeksi lainnya seperti PCP, CMV dan lain-lain. \n
+        6)	Mengonsumsi obat profilaksis dari konselor \n
+        Konselor dapat memberikan antibiotik seperti klaritomsin dan azitromisin jika jumlah sel CD4 anda dibawa 50 untuk mencegah MAC. Ketika jumlah sel CD4 sudah diatas 100 untuk 6 bulan, anda mungkin dapat menghentikan pemakaian antibiotik. Pemakaian obat profilaksis juga dapat mencegah infeksi lainnya seperti PCP, CMV dan lain-lain. \n
         7)	Lakukan pemeriksaan rutin sistem reproduksi untuk wanita \n
         Wanita sebaiknya melakukan pemeriksaan panggul dan pap smear secara teratur untuk mencegah adanya infeksi,bahkan kanker reproduksi.
     </string>

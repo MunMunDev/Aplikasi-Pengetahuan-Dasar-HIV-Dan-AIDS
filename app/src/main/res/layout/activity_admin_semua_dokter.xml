@@ -41,7 +41,7 @@
             android:layout_marginTop="22dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="20dp"
-            android:text="Semua Dokter"
+            android:text="Semua Konselor"
             android:textSize="20sp"
             android:textColor="@color/white"
             android:textStyle="bold"/>

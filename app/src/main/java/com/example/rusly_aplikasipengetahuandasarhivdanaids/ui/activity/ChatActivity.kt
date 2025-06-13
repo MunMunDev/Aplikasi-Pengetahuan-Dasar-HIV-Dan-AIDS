@@ -67,7 +67,7 @@ class ChatActivity : Activity() {
     var receivedRoom: String? = null
     var nama: String? = null
     var token: String? = null
-    val TAG = "ChatActivity";
+    val TAG = "ChatTagActivity";
 
     var image = ""
 
@@ -105,6 +105,7 @@ class ChatActivity : Activity() {
                 fetchChatKonsultasi()
                 etMessage.requestFocus()
             } else{
+//                fetchChatKonsultasi()
                 fetchChatPertanyaanOtomatis()
                 fetchtPertanyaanOtomatis()
             }
@@ -117,11 +118,10 @@ class ChatActivity : Activity() {
             sharedPref = SharedPreferencesLogin(this@ChatActivity)
             idSent = sharedPref.getId()
             bundle!!.apply {
-                idReceived = this.getString("id").toString()
-                nama = this.getString("nama").toString()
-                token = this.getString("token").toString()
+                idReceived = getString("id").toString()
+                nama = getString("nama").toString()
+                token = getString("token").toString()
 
-//                Toast.makeText(this@ChatActivity, "$token", Toast.LENGTH_SHORT).show()
             }
 
             tvNamaDokter.text = nama
@@ -135,10 +135,7 @@ class ChatActivity : Activity() {
             }
 
             btnInfoDontSendMessage.setOnClickListener{
-                llMessage.visibility = View.VISIBLE
-                llDontSendMessage.visibility = View.GONE
-
-                etMessage.requestFocus()
+                showChat()
             }
 
             btnInfoChatOtomatis.setOnClickListener{
@@ -147,8 +144,6 @@ class ChatActivity : Activity() {
                 llChatOtomatis.visibility = View.GONE
                 svPertanyaanOtomatis.visibility = View.GONE
                 rvListKonsultasiChatDokter.visibility = View.VISIBLE
-
-                fetchChatKonsultasi()
 
                 etMessage.requestFocus()
             }
@@ -177,6 +172,31 @@ class ChatActivity : Activity() {
         }
     }
 
+    private fun showChatOtomatis(){
+        binding.apply {
+            llMessage.visibility = View.GONE
+            rvListKonsultasiChatDokter.visibility = View.GONE
+            llChatOtomatis.visibility = View.GONE
+
+            llDontSendMessage.visibility = View.VISIBLE
+            svPertanyaanOtomatis.visibility = View.VISIBLE
+        }
+    }
+
+    private fun showChat(){
+        binding.apply {
+            llChatOtomatis.visibility = View.GONE
+            llDontSendMessage.visibility = View.GONE
+            svPertanyaanOtomatis.visibility = View.GONE
+
+            llMessage.visibility = View.VISIBLE
+            rvListKonsultasiChatDokter.visibility = View.VISIBLE
+            etMessage.requestFocus()
+
+            fetchChatKonsultasi()
+        }
+    }
+
     private fun postMessageToDatabase(
         id: String,
         message: String,
@@ -195,7 +215,9 @@ class ChatActivity : Activity() {
                 database.child("$id").child("ket").setValue("belum dibaca")
 
                 if(gambar.trim().isEmpty()){
-                    val valueMessage = "$message;-;${sharedPref.getId()};-;${sharedPref.getToken()}"
+//                    val valueMessage = "$message;-;${sharedPref.getId()};-;${sharedPref.getToken()}"
+                    val valueMessage = message
+                    Log.d(TAG, "onDataChange: token: $token")
                     postMessage(sharedPref.getNama(), valueMessage, token.toString())
                     binding.etMessage.text = null
                 } else{
@@ -217,15 +239,19 @@ class ChatActivity : Activity() {
         val jam = waktuZonaMakassar[0].trim().toInt()
         if(jam.toLong() >= 17.toLong() && jam.toLong() <= 22.toLong()){
             binding.apply {
-                llMessage.visibility = View.VISIBLE
-                llDontSendMessage.visibility = View.GONE
+//                llMessage.visibility = View.VISIBLE
+//                llDontSendMessage.visibility = View.GONE
+//
+//                etMessage.requestFocus()
 
-                etMessage.requestFocus()
+                showChat()
             }
         } else{
             binding.apply {
-                llMessage.visibility = View.GONE
-                llDontSendMessage.visibility = View.VISIBLE
+//                llMessage.visibility = View.GONE
+//                llDontSendMessage.visibility = View.VISIBLE
+
+                showChatOtomatis()
             }
         }
     }
@@ -235,6 +261,7 @@ class ChatActivity : Activity() {
         database.addValueEventListener(object: ValueEventListener{
             @SuppressLint("NotifyDataSetChanged")
             override fun onDataChange(snapshot: DataSnapshot) {
+
                 messageArrayList = ArrayList()
                 for(value in snapshot.children){
                     var valueIdMessage: String? = ""
@@ -276,10 +303,10 @@ class ChatActivity : Activity() {
                             valueKet = childWaktu
                         }
                     }
-                    if (sharedPref.getId() == valueIdReceived){
-//                            Log.d(TAG, "update: $childMessage")
-                        database.child("$valueIdMessage").child("ket").setValue("sudah dibaca")
-                    }
+//                    if (sharedPref.getId() == valueIdReceived){
+////                            Log.d(TAG, "update: $childMessage")
+//                        database.child("$valueIdMessage").child("ket").setValue("sudah dibaca")
+//                    }
                     if(valueIdSent!!.isNotEmpty() && valueIdReceived!!.isNotEmpty()){
                         messageArrayList.add(
                             MessageModel(
@@ -307,7 +334,19 @@ class ChatActivity : Activity() {
         })
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun setAdapterChatKonsultasi(list: List<MessageModel>) {
+//        Log.d(TAG, "setAdapterChatKonsultasi: ${list.size}")
+//        for (value in list){
+//            Log.d(TAG, "idMessage: ${value.idMessage}")
+//            Log.d(TAG, "message: ${value.message}")
+//            Log.d(TAG, "gambar: ${value.gambar}")
+//            Log.d(TAG, "idSent: ${value.idSent}")
+//            Log.d(TAG, "idReceived: ${value.idReceived}")
+//            Log.d(TAG, "tanggal: ${value.tanggal}")
+//            Log.d(TAG, "waktu: ${value.waktu}")
+//            Log.d(TAG, "ket: ${value.ket}")
+//        }
         val messageAdapter = MessageKonsultasiAdapter(this@ChatActivity, list, sharedPref.getId())
 
         binding.apply {
@@ -362,19 +401,10 @@ class ChatActivity : Activity() {
                             )
                         )
                     }
-//                    messageArrayList.add(MessageModel(valueMessage!!, valueIdSent!!, valueIdReceived!!))
-//                        messageArrayList[0] = MessageModel(valueMessage!!, valueIdSent!!, valueIdReceived!!)
-                    Log.d(TAG, "onDataChange 1: ${chatOtomatisArrayList.size}")
-                    Log.d(TAG, "onDataChange 2: ${chatOtomatisArrayList.size}")
-
                 }
-                Log.d(TAG, "onDataChange: size: ${chatOtomatisArrayList.size}")
 
                 val sorted = chatOtomatisArrayList.sortedWith(compareBy { it.idPertanyaanOtomatis })
                 Log.d(TAG, "sorted: ")
-                for(i in sorted){
-                    Log.d(TAG, "sorted data 23: ${i.idSent}, ${i.message}, ${i.idJenis}, ${i.idPertanyaanOtomatis} ")
-                }
 
                 setAdapterChatPertanyaanOtomatis(sorted)
             }
@@ -427,17 +457,14 @@ class ChatActivity : Activity() {
                             )
                         )
                     }
-                    Log.d(TAG, "onDataChange 1: ${pertanyaanOtomatisArrayList.size}")
-                    Log.d(TAG, "onDataChange 2: ${pertanyaanOtomatisArrayList.size}")
+//                    Log.d(TAG, "onDataChange 1: ${pertanyaanOtomatisArrayList.size}")
+//                    Log.d(TAG, "onDataChange 2: ${pertanyaanOtomatisArrayList.size}")
 
                 }
-                Log.d(TAG, "onDataChange: size: ${pertanyaanOtomatisArrayList.size}")
+//                Log.d(TAG, "onDataChange: size: ${pertanyaanOtomatisArrayList.size}")
 
                 val sorted = pertanyaanOtomatisArrayList.sortedWith(compareBy { it.idPertanyaan })
                 Log.d(TAG, "sorted: ")
-                for(i in sorted){
-                    Log.d(TAG, "sorted data: ${i.idPertanyaan}, ${i.pertanyaan}, ${i.jawaban} ")
-                }
 
                 setAdapterPertanyaanOtomatis(sorted)
             }
@@ -470,7 +497,7 @@ class ChatActivity : Activity() {
 
         view.apply {
             tvTitleKeterangan.text = "Jam Operasional"
-            tvBodyKeterangan.text = "Saran chat Dokter pada jam $jam"
+            tvBodyKeterangan.text = "Saran chat Konselor pada jam $jam"
             btnClose.setOnClickListener {
                 dialogInputan.dismiss()
             }
@@ -581,20 +608,26 @@ class ChatActivity : Activity() {
     }
 
     fun postMessage(valueNama:String, valueMessage:String, token: String){
-        ApiService.getRetrofit().postChat(PushNotificationModel(NotificationModel(valueNama, valueMessage), token))
-            .enqueue(object: Callback<PushNotificationModel> {
+        ApiService.getRetrofitMySql().postChat("", valueNama, valueMessage, token)
+            .enqueue(object: Callback<ResponseModel>{
                 override fun onResponse(
-                    call: Call<PushNotificationModel>,
-                    response: Response<PushNotificationModel>
+                    call: Call<ResponseModel>,
+                    response: Response<ResponseModel>
                 ) {
-//                    Toast.makeText(this@ChatActivity, "Berhasil", Toast.LENGTH_SHORT).show()
+                    if(response.isSuccessful){
+                        val responseData = response.body()!!
+                        if(responseData.status == "0"){
+                            Toast.makeText(this@ChatActivity, "Berhasil Kirim chat", Toast.LENGTH_SHORT).show()
+                        } else{
+                            Toast.makeText(this@ChatActivity, "Response: ${responseData.message_response}", Toast.LENGTH_SHORT).show()
+                        }
+                    } else{
+                        Toast.makeText(this@ChatActivity, "Error", Toast.LENGTH_SHORT).show()
+                    }
                 }
 
-                override fun onFailure(
-                    call: Call<PushNotificationModel>,
-                    t: Throwable
-                ) {
-                    Toast.makeText(this@ChatActivity, "Gagal: ${t.message}", Toast.LENGTH_SHORT).show()
+                override fun onFailure(call: Call<ResponseModel>, t: Throwable) {
+                    Toast.makeText(this@ChatActivity, "Gagal Kirim", Toast.LENGTH_SHORT).show()
                 }
 
             })

@@ -1,15 +1,20 @@
 package com.example.rusly_aplikasipengetahuandasarhivdanaids.data.database.firebase
 
+import android.Manifest
+import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.util.Log
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.R
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.data.model.PushNotificationModel
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.ui.activity.ChatActivity
@@ -23,6 +28,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.google.firebase.messaging.remoteMessage
 import com.google.gson.Gson
 import java.util.Random
 
@@ -55,89 +61,70 @@ class FirebaseMessage: FirebaseMessagingService() {
 
         })
     }
-
     override fun onMessageReceived(message: RemoteMessage) {
-//        var dataGson =
-        var dataGson = "${message.data};;;"
-        Log.d("MessageTAG", "onMessageReceived: $dataGson")
+        super.onMessageReceived(message)
 
-        try{
-            super.onMessageReceived(message)
-//            dataGson = Gson().toJson(message.data)
-//            dataGson = Gson().toJson(message.data)
+        // Tampilkan Toast (Pop Up)
+        val title = message.notification?.title ?: "Pesan baru"
+        val body = message.notification?.body ?: "Pesan baru"
+        try {
+//            Toast.makeText(applicationContext, body, Toast.LENGTH_LONG).show()
+            Log.d("MessageTAG", "Title: $title")
+            Log.d("MessageTAG", "Body: $body")
 
-//            var title = message.notification!!.title.toString()
-//            var content = message.notification!!.body.toString()
-
-            val limitGson = dataGson.split(", content=")
-
-            val valueLimitTitle = limitGson[0].split("{title=")
-            val valueLimitContent = limitGson[1].split("};;;")
-
-            val title = valueLimitTitle[1]
-            val content = valueLimitContent[0]
-            val arrayContent = content.split(";-;")
-            val isiChat = arrayContent[0]
-            val id = arrayContent[1]
-            val token = arrayContent[2]
-
-
-//        ShowNotification().shotNotification(this, title, content)
-
-            var channelId = "channel_id_hiv_aids"
-
-            val builder: NotificationCompat.Builder =
-                NotificationCompat.Builder(this, channelId)
-
-
-            val i = Intent(this, ChatActivity::class.java)
-            i.putExtra("id", id)
-            i.putExtra("nama", title)
-            i.putExtra("token", token)
-//            val i = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.journaldev.com/"))
-            val p = PendingIntent.getActivity(this, 0, i,
-                PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_MUTABLE)
-
-            builder.apply {
-                setSmallIcon(R.drawable.logo_nurse)
-                setContentTitle(title)
-                setContentText(isiChat)
-                setPriority(NotificationCompat.PRIORITY_MAX)
-                setContentIntent(p)
-            }
-
-
-            val manager: NotificationManager =
-                this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                var channel = NotificationChannel(
-                    channelId,
-                    "channel_id_hiv_aids",
-                    NotificationManager.IMPORTANCE_HIGH
+            // Tampilkan Notifikasi
+            if (message.notification != null) {
+                showNotification(
+                    message.notification!!.title ?: "Pesan Baru",
+                    message.notification!!.body ?: "",
+                    applicationContext
                 )
-                manager.createNotificationChannel(channel)
-                builder.setChannelId(channelId)
             }
-
-            manager.notify(Random().nextInt(), builder.build())
-        }
-        catch (ex: Exception){
-            Log.d("ExceptionTag", "onMessageReceived: $dataGson dan $ex")
+        } catch (ex: Exception){
+            Log.d("MessageTAG", "Error: ${ex.message}")
         }
     }
 
-    override fun onMessageSent(msgId: String) {
-        super.onMessageSent(msgId)
+    fun showNotification(title: String, message: String, context: Context) {
+        val arrayContent = message.split(";-;")
+        val isiChat = arrayContent.getOrNull(0) ?: message
+        val id = arrayContent.getOrNull(1) ?: ""
+        val token = arrayContent.getOrNull(2) ?: ""
 
-//        {
-//            "data":{
-//            "title":"",
-//            "content":"Halo bang"
-//        },
-//            "to":""
-//        }
+        val channelId = "channel_id_hiv_aids"
+        val builder = NotificationCompat.Builder(context, channelId)
 
-//        c7qrm-kKQJiU4FbuJer-9N:APA91bHAH0TNor3cxU4e0a4J_of3QfSbHzaA8X-vTvOtaB-7YbTkxJyKYJF6WHtkVrk7F6nyTuACiKRX3p4aeqDqNPJPndR2ThLa6X94XHQr9lofdRrCRgW6WAqF43Dq4F0DFlUrcKlj
+        val i = Intent(context, ChatActivity::class.java)
+        i.putExtra("id", id)
+        i.putExtra("nama", title)
+        i.putExtra("token", token)
+        val p = PendingIntent.getActivity(
+            context, 0, i,
+            PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        builder.apply {
+            setSmallIcon(R.drawable.logo_nurse)
+            setContentTitle(title)
+            setContentText(isiChat)
+            setPriority(NotificationCompat.PRIORITY_MAX)
+            setContentIntent(p)
+            setAutoCancel(true)
+        }
+
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                channelId,
+                "channel_id_hiv_aids",
+                NotificationManager.IMPORTANCE_HIGH
+            )
+            manager.createNotificationChannel(channel)
+            builder.setChannelId(channelId)
+        }
+
+        manager.notify(Random().nextInt(), builder.build())
     }
+
 }

@@ -67,6 +67,7 @@ class KonsultasiActivity : Activity() {
             var id = ""
             var nama = ""
             var umur = ""
+            var email = ""
             var username = ""
             var password = ""
             var sebagai = ""
@@ -79,14 +80,26 @@ class KonsultasiActivity : Activity() {
                     id = value.child("id").value.toString()
                     nama = value.child("nama").value.toString()
                     umur = value.child("umur").value.toString()
+                    email = value.child("email").value.toString()
                     username = value.child("username").value.toString()
                     password = value.child("password").value.toString()
                     sebagai = value.child("sebagai").value.toString()
                     token = value.child("token").value.toString()
 
                     if(sebagai.trim() != sharedPref.getSebagai() && sebagai.trim()!="admin"){
-                        usersArrayList.add(UsersModel(id, nama, umur, username, password, sebagai, token, adaChat))
+                        usersArrayList.add(UsersModel(id, nama, umur, email, username, password, sebagai, token, adaChat))
                     }
+                }
+
+                for(values in usersArrayList){
+                    Log.d("KonsultasiTAG", "onDataChange: id: $id")
+                    Log.d("KonsultasiTAG", "onDataChange: nama: $nama")
+                    Log.d("KonsultasiTAG", "onDataChange: umur: $umur")
+                    Log.d("KonsultasiTAG", "onDataChange: email: $email")
+                    Log.d("KonsultasiTAG", "onDataChange: username: $username")
+                    Log.d("KonsultasiTAG", "onDataChange: password: $password")
+                    Log.d("KonsultasiTAG", "onDataChange: token: $token")
+                    Log.d("KonsultasiTAG", "onDataChange: adaChat: $adaChat")
                 }
 
                 setAdapter()
@@ -121,7 +134,7 @@ class KonsultasiActivity : Activity() {
 
                     }
 
-                    Log.d(TAG, "data: aaaa")
+//                    Log.d(TAG, "data: aaaa")
 
                     if(valueIdReceived == sharedPref.getId()){
 

@@ -41,6 +41,7 @@ class UsersModel(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
+        parcel.readString(),
         parcel.readString()
     ) {
     }
@@ -48,7 +49,8 @@ class UsersModel(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(id)
         parcel.writeString(nama)
-        parcel.writeValue(umur)
+        parcel.writeString(umur)
+        parcel.writeString(email)
         parcel.writeString(username)
         parcel.writeString(password)
         parcel.writeString(sebagai)

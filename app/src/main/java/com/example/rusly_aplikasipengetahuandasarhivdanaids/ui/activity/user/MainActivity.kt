@@ -2,16 +2,23 @@ package com.example.rusly_aplikasipengetahuandasarhivdanaids.ui.activity.user
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.util.Base64
 import android.util.Log
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
+import com.auth0.jwt.JWT
+import com.auth0.jwt.algorithms.Algorithm
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.databinding.ActivityMainBinding
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.ui.activity.InformasiHivAidsActivity
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.ui.activity.KonsultasiActivity
@@ -19,6 +26,20 @@ import com.example.rusly_aplikasipengetahuandasarhivdanaids.ui.activity.TentangA
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.utils.KontrolNavigationDrawer
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.utils.LoadingAlertDialog
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.utils.SharedPreferencesLogin
+import com.google.auth.oauth2.GoogleCredentials
+import okhttp3.FormBody
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+import org.json.JSONObject
+import java.io.File
+import java.io.InputStream
+import java.nio.charset.Charset
+import java.security.KeyFactory
+import java.security.interfaces.RSAPrivateKey
+import java.security.spec.PKCS8EncodedKeySpec
+import java.util.Date
 
 
 class MainActivity : Activity() {
@@ -41,16 +62,6 @@ class MainActivity : Activity() {
 
         getNotificationPermission()
 
-//        FirebaseMessaging.getInstance().deleteToken()
-//        FirebaseMessaging.getInstance().token.apply {
-//            addOnSuccessListener { p0 ->
-//                Log.d("messagingToken", "onSuccess: $p0")
-//                Toast.makeText(this@MainActivity, "baru: $p0", Toast.LENGTH_SHORT).show()
-//            }
-//            addOnCanceledListener {
-//                Toast.makeText(this@MainActivity, "Gagal Mendapatkan Token", Toast.LENGTH_SHORT).show()
-//            }
-//        }
 
         Log.d("messagingTokenData", "onCreate: ${sharedPref.getToken()}")
 //        Toast.makeText(this@MainActivity, "${sharedPref.getToken()}", Toast.LENGTH_SHORT).show()
@@ -80,7 +91,7 @@ class MainActivity : Activity() {
                 tvTitleKonsultasai.text = "Konsultasi Pasien"
             }
             else if(sharedPref.getSebagai() == "user"){
-                tvTitleKonsultasai.text = "Konsultasi Dokter"
+                tvTitleKonsultasai.text = "Konsultasi Konselor"
             }
 
 //            getToken.setOnClickListener {

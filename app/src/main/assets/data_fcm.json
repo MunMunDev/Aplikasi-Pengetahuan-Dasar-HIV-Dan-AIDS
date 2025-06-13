@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "pengetahuan-dasar-hiv-aids",
+  "private_key_id": "c9a186fca22c5eb05878583d21064cef6ffdabe5",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC2j9uuRzPEysQM\nxdKn9iV0FdUYhxhBa72/S26wjwy+HfTEz5gpqcCfKJIOJiubFSK6p6X1xnJIdB6j\nrhb/UURBQ70Tynv0niHkMMWC+NX1QdTNO0C+jV0ifIClnjRF7/xWCqs+4R4qOr78\nMXBkcTYH4i8gfEX85cp4qY/NBI+9F1Q+evG8LfaT54k5gexKEH/o930qSTiTT+lu\nW4JyTT/k4qcQyZt3QefJ5Tzgj/AXKPF8e9uq+wqfq2MbGCK5V8kOt/XOqirG3kKe\ndpb9Ted+qSI7fLtBWFG0giGnVQkNr3JNSoK4hFe7OHMD2DOg1qv9TL4GVn/RPD/c\n1bKCnCVTAgMBAAECggEAUdLhfde46ruMqkLh+1j2CXUdmQw3wV6mYX5QIr9C0VVA\n1xNKWmYUiOFYsRHHmo8bDTjFyAYFQ9cTwn3tHcsRQgU30g5/hzB29T0s0VpxHyc9\n1yx3BND8TNAros9pE22QFgpbHWgtqnTBE+yeuM4LDvZ/89nvTn25xWIOKzAfsnpn\n48XiKwYrimCbuPfV5hN2zxTEAw/kifrNRrbeRZAaot85tE3is4rjvKX30VXir+bc\nzcpSCBQtRAMyp6hmPIT2XiDTQBVnZVUEgPsjmt4q2H7iT+PCUgY9RfWNSOgp1Apu\nlFKOVCotz5DLvpxqhCcPo6H25SIlXazBvjbkbQmC4QKBgQDgIWeYZlpXfzxNFTfU\n/kmrwKxeQAImbyR1tb/wpgDMm1Cnhi3C/k05ZZ1maGrV9NvcBx7f9ALsdCbVJ2ia\nKMnLrzHi/sIoI6DqtJ37/4ztC2lB39LllaqfMfcuALKGlP81bJBb/6ChfNCQZEX/\nSnwaj2okjsVsPzvWEfJWZ5W3oQKBgQDQhVAhWCjPFZvdU7EPPUweJnVNXFYJ4DsP\nGRkqmJDCagXoPaAaXYyzT6rEEHGWc5EdLK9XJNQe2R+QZda1txZ5EbPpsads602b\nj9rJslipnk0hNxj74E449+wn+mlUo9ptfn/vkvFeeUx8Ym5+Awe1dO479ZcTs95M\nOvh2dzmocwKBgDva7+2VN/8x7YqwZe6t0kLZ+65X7bsR52zAEvhTfNcni0yR2tq+\nSyVO69AThqSI9cY26JnqcnVvN4epNJgm2G1a5jm2y2cozKqhfad0wc/0QjHjclD5\nvU0ybM6ORR8H33gG/C51gBJgYNqOzNq2q5n0PuZwcmzMHlC3Dj7g/uzBAoGAAg/P\nYwUEIkgManvRXF02y3WF42XuU9qrutJ8tTcc908lD87MLnaOVZeMELQ460vpO2id\nszbiAgwTi9H19YYB6uCJ7t2a0jDha5BYkXX5+nNeP93TmWn2XAnXg+2t7PBR0JNX\noH7LdCuu3ev7O7O798dYM6+R9tfocsiCfGlhYJECgYEAuZcEg/EcyQ3+AMY7hbps\ngloTWju1kCMDfUqUozZ3IGEk/ojlcSZOU3QKpLtucLKDo0yVWrhwCP8q/cLEYp9D\nqixUtSaS6fBUyag6/OC4ePN/G+gmmLWJEOgEzBF/3bJTCST37jdn/oV55r2m4RRe\nICtJWwQO4sH77WxnWcaAQJs=\n-----END PRIVATE KEY-----\n",
+  "client_email": "fcm-sender@pengetahuan-dasar-hiv-aids.iam.gserviceaccount.com",
+  "client_id": "102714945211690360164",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/fcm-sender%40pengetahuan-dasar-hiv-aids.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

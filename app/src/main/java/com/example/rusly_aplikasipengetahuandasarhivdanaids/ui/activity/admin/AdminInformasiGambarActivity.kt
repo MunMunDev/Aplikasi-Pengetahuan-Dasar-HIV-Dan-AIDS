@@ -128,7 +128,7 @@ class AdminInformasiGambarActivity : AppCompatActivity() {
                 if(check){
                     keterangan = etKeterangan.text.toString()
                     waktu = "${tanggalDanWaktu.tanggalSekarangZonaMakassar()}-${tanggalDanWaktu.waktuSekarangZonaMakassar()}"
-                    nameImage = "information-$idInformation-$waktu"
+                    nameImage = "information-$idInformation"
 
                     val post = convertStringToMultipartBody("post_gambar_chat")
                     postTambahInformasiGambar(post, convertStringToMultipartBody("$nameImage.png"), fileImage)
@@ -309,13 +309,14 @@ class AdminInformasiGambarActivity : AppCompatActivity() {
                 if(check){
                     keterangan = etKeterangan.text.toString()
                     waktu = "${tanggalDanWaktu.tanggalSekarangZonaMakassar()}-${tanggalDanWaktu.waktuSekarangZonaMakassar()}"
-                    nameImage = "information-$idInformation-$waktu"
+                    nameImage = "information-$idInformation"
 
                     val post = convertStringToMultipartBody("post_gambar_chat")
                     val id = "information-${information.id_information}-${information.waktu}"
 
                     if(etGambar.text.toString().trim() == resources.getString(R.string.ket_klik_file)){
                         postUpdateFirebaseDataGambar(id, keterangan!!, information.waktu!!)
+                        Toast.makeText(this@AdminInformasiGambarActivity, "tanpa", Toast.LENGTH_SHORT).show()
                     } else{
                         postUpdateFirebaseDataGambar(id, keterangan!!, information.waktu!!)
                         postUpdateInformasiGambar(post, convertStringToMultipartBody("${information.gambar}"), fileImage)
@@ -431,7 +432,7 @@ class AdminInformasiGambarActivity : AppCompatActivity() {
         }
 
         Glide.with(this@AdminInformasiGambarActivity)
-            .load("https://aplikasi-tugas.my.id/rusly/gambar/$gambar") // URL Gambar
+            .load("${ApiService.BASE_URL_MYSQL}/rusly/gambar/$gambar") // URL Gambar
             .error(R.drawable.gambar_error_image)
             .into(view.ivShowImage) // imageView mana yang akan diterapkan
 

@@ -13,7 +13,7 @@
         app:layout_constraintEnd_toStartOf="@id/ivAdaPesan"
         android:layout_marginTop="14dp"
         android:layout_marginEnd="10dp"
-        android:text="Nama Dokter"
+        android:text="Nama Konselor"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"/>

@@ -43,7 +43,7 @@
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/bg_card"
-            android:elevation="10dp">
+            android:elevation="2dp">
             <View
                 android:id="@+id/pembatas"
                 android:layout_width="1.4dp"
@@ -112,7 +112,7 @@
                     android:id="@+id/tvTitleKonsultasai"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Konsultasi Dokter"
+                    android:text="Konsultasi Konselor"
                     android:textSize="14sp"
                     android:textColor="@color/black"
                     android:textStyle="bold"/>
@@ -129,7 +129,8 @@
                 android:layout_marginEnd="4dp"
                 android:layout_marginTop="6dp"
                 android:gravity="center|bottom"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                tools:ignore="UseCompoundDrawables">
                 <ImageView
                     android:layout_width="45dp"
                     android:layout_height="45dp"

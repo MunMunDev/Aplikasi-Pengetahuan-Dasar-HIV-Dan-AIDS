@@ -59,6 +59,7 @@ class KonsultasiActivity2 : Activity() {
             var id = ""
             var nama = ""
             var umur = ""
+            var email = ""
             var username = ""
             var password = ""
             var sebagai = ""
@@ -71,6 +72,7 @@ class KonsultasiActivity2 : Activity() {
                     id = value.child("id").value.toString()
                     nama = value.child("nama").value.toString()
                     umur = value.child("umur").value.toString()
+                    email = value.child("email").value.toString()
                     username = value.child("username").value.toString()
                     password = value.child("password").value.toString()
                     sebagai = value.child("sebagai").value.toString()
@@ -131,7 +133,7 @@ class KonsultasiActivity2 : Activity() {
 
                         Log.d(TAG, "data: ket: $adaChat ")
 
-                        usersArrayList.add(UsersModel(id, nama, umur, username, password, sebagai, token, adaChat))
+                        usersArrayList.add(UsersModel(id, nama, umur, email, username, password, sebagai, token, adaChat))
                     }
                 }
                 konsultasiUserAdapter = ListKonsultasiUserAdapter(this@KonsultasiActivity2, usersArrayList)

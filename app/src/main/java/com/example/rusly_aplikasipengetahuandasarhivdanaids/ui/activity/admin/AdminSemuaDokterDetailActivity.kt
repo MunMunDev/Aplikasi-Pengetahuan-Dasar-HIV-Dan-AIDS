@@ -1,15 +1,20 @@
 package com.example.rusly_aplikasipengetahuandasarhivdanaids.ui.activity.admin
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.R
+import com.example.rusly_aplikasipengetahuandasarhivdanaids.adapter.AdminListSemuaUserAdapter
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.data.database.firebase.FirebaseService
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.data.model.UsersModel
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.databinding.ActivityAdminSemuaDokterDetailBinding
@@ -23,9 +28,9 @@ import com.google.firebase.database.ValueEventListener
 class AdminSemuaDokterDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAdminSemuaDokterDetailBinding
     lateinit var database: DatabaseReference
-    lateinit var list: UsersModel
     private var idUser: String? = null
     lateinit var loading: LoadingAlertDialog
+    lateinit var userArrayList : UsersModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminSemuaDokterDetailBinding.inflate(layoutInflater)
@@ -35,7 +40,7 @@ class AdminSemuaDokterDetailActivity : AppCompatActivity() {
 
         setDataSebelumnya()
         setButton()
-        setData()
+//        setData()
     }
 
     private fun setButton() {
@@ -47,7 +52,10 @@ class AdminSemuaDokterDetailActivity : AppCompatActivity() {
                 dialogHapusdata()
             }
             btnUbahData.setOnClickListener {
-                dialogUpdateData(list.nama!!, list.umur!!.toInt(), list.username!!, list.password!!, list.sebagai!!, list.token!!)
+                dialogUpdateData(
+                    userArrayList.nama!!, userArrayList.umur!!.toInt(), userArrayList.email!!, userArrayList.username!!,
+                    userArrayList.password!!, userArrayList.sebagai!!, userArrayList.token!!
+                )
             }
         }
     }
@@ -80,7 +88,7 @@ class AdminSemuaDokterDetailActivity : AppCompatActivity() {
     }
 
     private fun postDeleteData() {
-        database.child(list.id!!).addListenerForSingleValueEvent(object: ValueEventListener {
+        database.child(userArrayList.id!!).addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 snapshot.ref.removeValue()
                 Toast.makeText(this@AdminSemuaDokterDetailActivity, "Berhasil Hapus Data", Toast.LENGTH_SHORT).show()
@@ -99,26 +107,71 @@ class AdminSemuaDokterDetailActivity : AppCompatActivity() {
     private fun setDataSebelumnya() {
         val extras = intent.extras
         if(extras != null) {
-            list = intent.getParcelableExtra<UsersModel>("dataDokter")!!
+            val list = intent.getParcelableExtra<UsersModel>("dataDokter")!!
             idUser = list.id
+
+            fetchDokter(idUser!!)
         }
     }
 
+    private fun fetchDokter(idUser: String){
+        database.child(idUser).addValueEventListener(object: ValueEventListener {
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val id = snapshot.child("id").value.toString()
+                val nama = snapshot.child("nama").value.toString()
+                val umur = snapshot.child("umur").value.toString()
+                val email = snapshot.child("email").value.toString()
+                val username = snapshot.child("username").value.toString()
+                val password = snapshot.child("password").value.toString()
+                val sebagai = snapshot.child("sebagai").value.toString()
+                val token = snapshot.child("token").value.toString()
+                val dibaca = snapshot.child("dibaca").value.toString()
+
+                userArrayList = UsersModel(id, nama, umur, email, username, password, sebagai, token, dibaca)
+
+                Log.d("FetchTAG", "id: $id")
+                Log.d("FetchTAG", "nama: $nama")
+                Log.d("FetchTAG", "umur: $umur")
+                Log.d("FetchTAG", "email: $email")
+                Log.d("FetchTAG", "username: $username")
+                Log.d("FetchTAG", "password: $password")
+                Log.d("FetchTAG", "sebagai: $sebagai")
+                Log.d("FetchTAG", "token: $token")
+                Log.d("FetchTAG", "dibaca: $dibaca")
+
+//                binding.apply {
+//                    etNama.setText(nama)
+//                    etUmur.setText(umur)
+//                    etUsername.setText(username)
+//                    etPassword.setText(password)
+//                }
+
+                setData()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@AdminSemuaDokterDetailActivity, "Gagal Memuat Database", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
 
     private fun setData() {
         binding.apply {
-            etNama.setText(list.nama)
-            etUmur.setText(list.umur.toString())
-            etUsername.setText(list.username)
-            etPassword.setText(list.password)
+            etNama.setText(userArrayList.nama)
+            etUmur.setText(userArrayList.umur.toString())
+            etUsername.setText(userArrayList.username)
+            etPassword.setText(userArrayList.password)
         }
     }
 
-    fun dialogUpdateData(nama: String, umur: Int, username: String, password: String, sebagai: String, token: String){
+    fun dialogUpdateData(nama: String, umur: Int, email: String, username: String, password: String, sebagai: String, token: String){
         val viewAlertDialog = View.inflate(this@AdminSemuaDokterDetailActivity, R.layout.alert_dialog_update_akun, null)
 
         val etNama = viewAlertDialog.findViewById<TextView>(R.id.etNama)
         val etUmur = viewAlertDialog.findViewById<TextView>(R.id.etUmur)
+        val etEmail = viewAlertDialog.findViewById<TextView>(R.id.etEmail)
         val etUsername = viewAlertDialog.findViewById<TextView>(R.id.etUsername)
         val etPassword = viewAlertDialog.findViewById<TextView>(R.id.etPassword)
         val btnShowPassword = viewAlertDialog.findViewById<ImageView>(R.id.btnShowPassword)
@@ -129,6 +182,7 @@ class AdminSemuaDokterDetailActivity : AppCompatActivity() {
 
         etNama.text = nama
         etUmur.text = umur.toString()
+        etEmail.text = email
         etUsername.text = username
         etPassword.text = password
 
@@ -151,7 +205,11 @@ class AdminSemuaDokterDetailActivity : AppCompatActivity() {
 
         btnSimpan.setOnClickListener {
             loading.alertDialogLoading()
-            postUpdateData(dialogInputan, idUser!!, etNama.text.toString(), etUmur.text.toString(), etUsername.text.toString(), etPassword.text.toString(), sebagai, token, username)
+            postUpdateData(
+                dialogInputan, idUser!!, etNama.text.toString(), etUmur.text.toString(),
+                etEmail.text.toString(), etUsername.text.toString(), etPassword.text.toString(),
+                sebagai, token, username
+            )
         }
         btnBatal.setOnClickListener {
             dialogInputan.dismiss()
@@ -159,7 +217,7 @@ class AdminSemuaDokterDetailActivity : AppCompatActivity() {
     }
 
 
-    fun postUpdateData(dialogInputan: AlertDialog, id:String, nama: String, umur: String, username: String, password: String, sebagai: String, token:String, usernameLama:String){
+    fun postUpdateData(dialogInputan: AlertDialog, id:String, nama: String, umur: String, email: String, username: String, password: String, sebagai: String, token:String, usernameLama:String){
         database.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 var cekUsernameTerdaftar = false
@@ -180,12 +238,13 @@ class AdminSemuaDokterDetailActivity : AppCompatActivity() {
                         database.child(id).child("id").setValue(id)
                         database.child(id).child("nama").setValue(nama)
                         database.child(id).child("umur").setValue(umur)
+                        database.child(id).child("email").setValue(email)
                         database.child(id).child("username").setValue(username)
                         database.child(id).child("password").setValue(password)
                         database.child(id).child("sebagai").setValue(sebagai)
                         database.child(id).child("token").setValue(token)
 
-                        list = UsersModel(
+                        userArrayList = UsersModel(
                             id,
                             nama,
                             umur,
@@ -206,14 +265,16 @@ class AdminSemuaDokterDetailActivity : AppCompatActivity() {
                     database.child(id).child("id").setValue(id)
                     database.child(id).child("nama").setValue(nama)
                     database.child(id).child("umur").setValue(umur)
+                    database.child(id).child("email").setValue(email)
                     database.child(id).child("username").setValue(username)
                     database.child(id).child("password").setValue(password)
                     database.child(id).child("sebagai").setValue(sebagai)
 
-                    list = UsersModel(
+                    userArrayList = UsersModel(
                         id,
                         nama,
                         umur,
+                        email,
                         username,
                         password,
                         sebagai,

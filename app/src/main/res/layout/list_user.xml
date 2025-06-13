@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="Nama Dokter"
+        android:text="Nama Konselor"
         android:textColor="@color/black"
         android:textSize="14sp"
         android:textStyle="bold"/>

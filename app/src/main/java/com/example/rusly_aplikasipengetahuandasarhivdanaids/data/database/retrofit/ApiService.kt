@@ -8,18 +8,17 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiService {
 
-    private const val BASE_URL = "https://fcm.googleapis.com/"
+    private const val BASE_URL_MESSAGE = "https://fcm.googleapis.com/"  //Message
 
     fun getRetrofit(): ApiConfig {
         val gson = GsonBuilder().setLenient().create()
-        val retrofit = Retrofit.Builder().baseUrl(BASE_URL)
+        val retrofit = Retrofit.Builder().baseUrl(BASE_URL_MESSAGE)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
         return retrofit.create(ApiConfig::class.java)
     }
 
-
-    const val BASE_URL_MYSQL = "https://aplikasi-tugas.my.id/"
+    const val BASE_URL_MYSQL = "https://e-portofolio.web.id/"
     fun getRetrofitMySql(): ApiConfig {
         val gson = GsonBuilder().setLenient().create()
         val retrofit = Retrofit.Builder().baseUrl(BASE_URL_MYSQL)

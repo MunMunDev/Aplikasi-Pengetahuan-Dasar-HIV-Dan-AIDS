@@ -30,7 +30,7 @@ class ListKonsultasiUserAdapter(
                 val data = arrayList[index]
                 data.apply {
                     val model = UsersModel(
-                        id, nama, umur, username, password, sebagai, token, "ada"
+                        id, nama, umur, email, username, password, sebagai, token, "ada"
                     )
                     arrayListTemp[index] = model
                 }
@@ -63,19 +63,31 @@ class ListKonsultasiUserAdapter(
     override fun onBindViewHolder(holder: KonsultasiViewHolder, position: Int) {
         holder.apply {
             tvNama.text = arrayListTemp[position].nama
-            if(arrayListTemp[position].dibaca == "ada"){
-                ivAdaPesan.visibility = View.VISIBLE
-            } else{
-                ivAdaPesan.visibility = View.GONE
-            }
+//            if(arrayListTemp[position].dibaca == "ada"){
+//                ivAdaPesan.visibility = View.VISIBLE
+//            } else{
+//                ivAdaPesan.visibility = View.GONE
+//            }
 
             clListKonsultasi.setOnClickListener {
 //            Toast.makeText(context, "Pindah ${arrayListTemp[position].nama} dan ${arrayListTemp[position].id}", Toast.LENGTH_SHORT).show()
 
+                val id = arrayListTemp[position].id
+                val nama = arrayListTemp[position].nama
+                val token = arrayListTemp[position].token
+
                 val intent = Intent(context, ChatActivity::class.java)
-                intent.putExtra("id", arrayListTemp[position].id)
-                intent.putExtra("nama", arrayListTemp[position].nama)
-                intent.putExtra("token", arrayListTemp[position].token)
+                intent.putExtra("id", id)
+                intent.putExtra("nama", nama)
+                intent.putExtra("token", token)
+//                Log.d("ChatTagActivity", "onBindViewHolder: id: ${arrayListTemp[position].id}")
+//                Log.d("ChatTagActivity", "onBindViewHolder: nama: ${arrayListTemp[position].nama}")
+//                Log.d("ChatTagActivity", "onBindViewHolder: umur: ${arrayListTemp[position].umur}")
+//                Log.d("ChatTagActivity", "onBindViewHolder: email: ${arrayListTemp[position].email}")
+//                Log.d("ChatTagActivity", "onBindViewHolder: username: ${arrayListTemp[position].username}")
+//                Log.d("ChatTagActivity", "onBindViewHolder: password: ${arrayListTemp[position].password}")
+                Log.d("MessageTagActivity", "onBindViewHolderAdapter: token: $token")
+//                Log.d("ChatTagActivity", "onBindViewHolder: dibaca: ${arrayListTemp[position].dibaca}")
                 context.startActivity(intent)
             }
         }

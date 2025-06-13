@@ -23,10 +23,19 @@ interface ApiConfig {
 
     @Headers(
         "Content-Type:application/json",
-        "Authorization:key=AAAAOVHRxV4:APA91bGqvH35P8L77ZH-YG2N2eU1OqzvL5qfZ4KSW1CYixNCYJeYTHvLGNL-PDcxoEz55rWrQagxEaR4pn5fMkgOc7zhBp6Bw5njHDgblAxDOeaGK_SnW_BwT7DWemmcd8ISNg_BdPrd"
+        "Authorization:key=BAcDd7ysZ1P-lShZw0XaDD1MUGLRYwjl3ocUpXudCQhtF5a1cfnJaTK3xhEzvc0MFdbd3u4UQGVkOTeaf20ZfBM"
     )
     @POST("fcm/send")
     fun postChat(@Body send: PushNotificationModel):Call<PushNotificationModel>
+
+    @FormUrlEncoded
+    @POST("rusly/send_chat.php")
+    fun postChat(
+        @Field("send_chat") send_chat: String,
+        @Field("title") title: String,
+        @Field("body") body: String,
+        @Field("deviceToken") deviceToken: String,
+    ): Call<ResponseModel>
 
     @Multipart
     @POST("rusly/upload_gambar.php")

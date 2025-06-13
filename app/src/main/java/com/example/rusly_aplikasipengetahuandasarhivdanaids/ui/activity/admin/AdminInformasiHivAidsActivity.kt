@@ -134,11 +134,24 @@ class AdminInformasiHivAidsActivity : AppCompatActivity() {
                     judul = value.child("judul").value.toString()
                     isi = value.child("isi").value.toString()
 
-                    listInformation.add(
-                        InformationDataModel(
-                            id, urutan, judul, isi
+                    Log.d("NullTAG", "id: $id")
+                    Log.d("NullTAG", "urutan: $urutan")
+                    Log.d("NullTAG", "judul: $judul")
+                    Log.d("NullTAG", "isi: $isi")
+
+                    if(id != "null"){
+                        listInformation.add(
+                            InformationDataModel(
+                                id, urutan, judul, isi
+                            )
                         )
-                    )
+                    }
+
+//                    listInformation.add(
+//                        InformationDataModel(
+//                            id, urutan, judul, isi
+//                        )
+//                    )
                 }
 
                 val sortedFromUrutan = listInformation.sortedWith(compareBy { it.urutan })
