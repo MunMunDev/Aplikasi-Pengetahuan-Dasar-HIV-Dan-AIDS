@@ -33,6 +33,7 @@ import com.example.rusly_aplikasipengetahuandasarhivdanaids.data.model.PushNotif
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.data.model.ResponseModel
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.databinding.ActivityChatBinding
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.databinding.AlertDialogKeteranganBinding
+import com.example.rusly_aplikasipengetahuandasarhivdanaids.utils.LoadingAlertDialog
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.utils.SharedPreferencesLogin
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -61,6 +62,7 @@ class ChatActivity : Activity() {
     lateinit var databasePertanyaanOtomatis: DatabaseReference
     lateinit var messageAdapter: MessageKonsultasiAdapter
     lateinit var messageArrayList : ArrayList<MessageModel>
+    private lateinit var loading: LoadingAlertDialog
     var idSent: String? = null
     var idReceived: String? = null
     var senderRoom: String? = null
@@ -81,6 +83,8 @@ class ChatActivity : Activity() {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(view)
+
+        loading = LoadingAlertDialog(this@ChatActivity)
 
 //        fetchChatKonsultasi()
 //        fetchChatPertanyaanOtomatis()
@@ -202,6 +206,7 @@ class ChatActivity : Activity() {
         message: String,
         gambar: String
     ){
+        loading.alertDialogLoading()
         database = FirebaseService().firebase().child("chats").child("message")
         database.addListenerForSingleValueEvent(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -281,7 +286,7 @@ class ChatActivity : Activity() {
                         val childIdReceived = value.child("idReceived").value.toString()
                         val childTanggal = value.child("tanggal").value.toString()
                         val childWaktu = value.child("waktu").value.toString()
-                        val childKet = value.child("waktu").value.toString()
+                        val childKet = value.child("ket").value.toString()
 
                         if(childIdSent == idSent && childIdReceived == idReceived){
                             valueIdMessage = childIdMessage
@@ -623,6 +628,7 @@ class ChatActivity : Activity() {
                     call: Call<ResponseModel>,
                     response: Response<ResponseModel>
                 ) {
+                    loading.alertDialogCancel()
                     if(response.isSuccessful){
                         val responseData = response.body()!!
                         if(responseData.status == "0"){
@@ -636,6 +642,7 @@ class ChatActivity : Activity() {
                 }
 
                 override fun onFailure(call: Call<ResponseModel>, t: Throwable) {
+                    loading.alertDialogCancel()
                     Toast.makeText(this@ChatActivity, "Gagal Kirim", Toast.LENGTH_SHORT).show()
                 }
 
