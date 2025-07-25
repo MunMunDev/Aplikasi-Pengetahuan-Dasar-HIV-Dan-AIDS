@@ -33,6 +33,7 @@ import com.example.rusly_aplikasipengetahuandasarhivdanaids.databinding.AlertDia
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.databinding.AlertDialogKeteranganBinding
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.databinding.AlertDialogKonfirmasiBinding
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.databinding.AlertDialogShowImageBinding
+import com.example.rusly_aplikasipengetahuandasarhivdanaids.utils.KataAcak
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.utils.OnClickItem
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.utils.TanggalDanWaktu
 import com.google.firebase.database.DataSnapshot
@@ -51,6 +52,7 @@ class AdminInformasiGambarActivity : AppCompatActivity() {
     private var firebaseConfig = FirebaseConfig()
     private lateinit var adapter: AdminListInformasiGambarAdapter
     private var idInformation = ""
+    private var idInformationGambar = ""
 
     private var STORAGE_PERMISSION_CODE = 10
     private var IMAGE_CODE = 10
@@ -58,6 +60,7 @@ class AdminInformasiGambarActivity : AppCompatActivity() {
     private var tempView: AlertDialogAdminInformasiGambarBinding? = null
     private var fileImage: MultipartBody.Part? = null
     private var tanggalDanWaktu = TanggalDanWaktu()
+    private var kataAcak = KataAcak()
 
     private var image: String? = null
     private var keterangan: String? = null
@@ -114,6 +117,7 @@ class AdminInformasiGambarActivity : AppCompatActivity() {
                 }
             }
 
+
             btnSimpan.setOnClickListener{
                 var check = true
                 if(etKeterangan.text.toString().isEmpty()){
@@ -128,10 +132,14 @@ class AdminInformasiGambarActivity : AppCompatActivity() {
                 if(check){
                     keterangan = etKeterangan.text.toString()
                     waktu = "${tanggalDanWaktu.tanggalSekarangZonaMakassar()}-${tanggalDanWaktu.waktuSekarangZonaMakassar()}"
-                    nameImage = "information-$idInformation"
+                    idInformationGambar = "information-$idInformation-$waktu"
+                    nameImage = "information-$idInformation-$waktu-${kataAcak.getHurufDanAngka(5)}.png"
+
+                    Toast.makeText(this@AdminInformasiGambarActivity, "$waktu", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@AdminInformasiGambarActivity, "$nameImage", Toast.LENGTH_SHORT).show()
 
                     val post = convertStringToMultipartBody("post_gambar_chat")
-                    postTambahInformasiGambar(post, convertStringToMultipartBody("$nameImage.png"), fileImage)
+                    postTambahInformasiGambar(post, convertStringToMultipartBody("$nameImage"), fileImage)
                     dialogInputan.dismiss()
                 }
             }
@@ -169,10 +177,10 @@ class AdminInformasiGambarActivity : AppCompatActivity() {
 
     private fun postFirebaseDataGambar() {
         adapter.notifyDataSetChanged()
-        firebaseConfig.fetchInformationGambar().child("$nameImage").apply {
+        firebaseConfig.fetchInformationGambar().child("$idInformationGambar").apply {
             child("id_information").setValue("$idInformation")
             child("keterangan").setValue("$keterangan")
-            child("gambar").setValue("$nameImage.png")
+            child("gambar").setValue("$nameImage")
             child("waktu").setValue("$waktu")
         }
     }
@@ -308,18 +316,16 @@ class AdminInformasiGambarActivity : AppCompatActivity() {
 
                 if(check){
                     keterangan = etKeterangan.text.toString()
-                    waktu = "${tanggalDanWaktu.tanggalSekarangZonaMakassar()}-${tanggalDanWaktu.waktuSekarangZonaMakassar()}"
-                    nameImage = "information-$idInformation"
+                    nameImage = "information-${information.id_information}-${information.waktu}-${kataAcak.getHurufDanAngka(5)}.png"
+                    idInformation = "information-${information.id_information!!}-${information.waktu!!}"
 
                     val post = convertStringToMultipartBody("post_gambar_chat")
-                    val id = "information-${information.id_information}-${information.waktu}"
 
                     if(etGambar.text.toString().trim() == resources.getString(R.string.ket_klik_file)){
-                        postUpdateFirebaseDataGambar(id, keterangan!!, information.waktu!!)
-                        Toast.makeText(this@AdminInformasiGambarActivity, "tanpa", Toast.LENGTH_SHORT).show()
+                        postUpdateFirebaseData(idInformation, keterangan!!)
                     } else{
-                        postUpdateFirebaseDataGambar(id, keterangan!!, information.waktu!!)
-                        postUpdateInformasiGambar(post, convertStringToMultipartBody("${information.gambar}"), fileImage)
+                        postUpdateFirebaseDataGambar(idInformation, keterangan!!, nameImage!!)
+                        postUpdateInformasiGambar(post, convertStringToMultipartBody("$nameImage"), fileImage)
                     }
                     dialogInputan.dismiss()
                 }
@@ -355,12 +361,19 @@ class AdminInformasiGambarActivity : AppCompatActivity() {
         })
     }
 
-    private fun postUpdateFirebaseDataGambar(id:String, keterangan: String, waktu:String) {
-        firebaseConfig.fetchInformationGambar().child("$id").apply {
-            child("id_information").setValue("$idInformation")
+    private fun postUpdateFirebaseData(idInfor:String, keterangan: String) {
+        firebaseConfig.fetchInformationGambar().child("$idInfor").apply {
             child("keterangan").setValue("$keterangan")
-            child("gambar").setValue("$id.png")
-            child("waktu").setValue("$waktu")
+        }
+        adapter.notifyDataSetChanged()
+    }
+
+    private fun postUpdateFirebaseDataGambar(idInfor:String, keterangan: String, gambar: String) {
+        firebaseConfig.fetchInformationGambar().child("$idInfor").apply {
+//            child("id_information").setValue("$idInformation")
+            child("keterangan").setValue("$keterangan")
+            child("gambar").setValue("$gambar")
+//            child("waktu").setValue("$waktu")
         }
         adapter.notifyDataSetChanged()
     }

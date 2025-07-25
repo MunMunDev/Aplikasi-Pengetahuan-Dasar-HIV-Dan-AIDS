@@ -215,8 +215,8 @@ class ChatActivity : Activity() {
                 database.child("$id").child("ket").setValue("belum dibaca")
 
                 if(gambar.trim().isEmpty()){
-//                    val valueMessage = "$message;-;${sharedPref.getId()};-;${sharedPref.getToken()}"
-                    val valueMessage = message
+                    val valueMessage = "$message;-;${sharedPref.getId()};-;${sharedPref.getToken()}"
+//                    val valueMessage = message
                     Log.d(TAG, "onDataChange: token: $token")
                     postMessage(sharedPref.getNama(), valueMessage, token.toString())
                     binding.etMessage.text = null
@@ -281,6 +281,7 @@ class ChatActivity : Activity() {
                         val childIdReceived = value.child("idReceived").value.toString()
                         val childTanggal = value.child("tanggal").value.toString()
                         val childWaktu = value.child("waktu").value.toString()
+                        val childKet = value.child("waktu").value.toString()
 
                         if(childIdSent == idSent && childIdReceived == idReceived){
                             valueIdMessage = childIdMessage
@@ -290,7 +291,11 @@ class ChatActivity : Activity() {
                             valueIdReceived = childIdReceived
                             valueTanggal = childTanggal
                             valueWaktu = childWaktu
-                            valueKet = childWaktu
+                            valueKet = childKet
+
+                            if(childKet == "belum dibaca"){
+                                updateSudahBaca(childIdMessage)
+                            }
                         }
                         else if(childIdSent == idReceived && childIdReceived == idSent){
                             valueIdMessage = childIdMessage
@@ -300,7 +305,11 @@ class ChatActivity : Activity() {
                             valueIdReceived = childIdReceived
                             valueTanggal = childTanggal
                             valueWaktu = childWaktu
-                            valueKet = childWaktu
+                            valueKet = childKet
+
+                            if(childKet == "belum dibaca"){
+                                updateSudahBaca(childIdMessage)
+                            }
                         }
                     }
 //                    if (sharedPref.getId() == valueIdReceived){
@@ -753,6 +762,15 @@ class ChatActivity : Activity() {
             val read = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
             write == PackageManager.PERMISSION_GRANTED && read == PackageManager.PERMISSION_GRANTED
         }
+    }
+
+    private fun updateSudahBaca(tableName: String){
+        FirebaseService().firebase()
+            .child("chats")
+            .child("message")
+            .child(tableName)
+            .child("ket")
+            .setValue("dibaca")
     }
 
     override fun onBackPressed() {

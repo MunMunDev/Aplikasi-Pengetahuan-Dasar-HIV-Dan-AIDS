@@ -60,5 +60,5 @@ interface ApiConfig {
         @Field("email") email: String,
         @Field("username") username: String,
         @Field("password") password: String,
-    ): Call<ArrayList<ResponseModel>>
+    ): Call<ResponseModel>
 }

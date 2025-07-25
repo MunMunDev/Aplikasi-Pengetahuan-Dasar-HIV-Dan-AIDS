@@ -91,6 +91,10 @@ class FirebaseMessage: FirebaseMessagingService() {
         val id = arrayContent.getOrNull(1) ?: ""
         val token = arrayContent.getOrNull(2) ?: ""
 
+        Log.d("FirebaseMessageTAG", "isiChat: $isiChat")
+        Log.d("FirebaseMessageTAG", "id: $id")
+        Log.d("FirebaseMessageTAG", "token: $token")
+
         val channelId = "channel_id_hiv_aids"
         val builder = NotificationCompat.Builder(context, channelId)
 

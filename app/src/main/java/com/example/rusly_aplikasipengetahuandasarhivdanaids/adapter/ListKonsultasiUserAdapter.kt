@@ -63,11 +63,11 @@ class ListKonsultasiUserAdapter(
     override fun onBindViewHolder(holder: KonsultasiViewHolder, position: Int) {
         holder.apply {
             tvNama.text = arrayListTemp[position].nama
-//            if(arrayListTemp[position].dibaca == "ada"){
-//                ivAdaPesan.visibility = View.VISIBLE
-//            } else{
-//                ivAdaPesan.visibility = View.GONE
-//            }
+            if(arrayListTemp[position].dibaca == "ada"){
+                ivAdaPesan.visibility = View.VISIBLE
+            } else{
+                ivAdaPesan.visibility = View.GONE
+            }
 
             clListKonsultasi.setOnClickListener {
 //            Toast.makeText(context, "Pindah ${arrayListTemp[position].nama} dan ${arrayListTemp[position].id}", Toast.LENGTH_SHORT).show()

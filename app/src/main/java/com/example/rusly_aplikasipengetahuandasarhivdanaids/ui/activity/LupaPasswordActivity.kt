@@ -94,7 +94,7 @@ class LupaPasswordActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@LupaPasswordActivity, "Gagal", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@LupaPasswordActivity, "Gagal database", Toast.LENGTH_SHORT).show()
             }
 
         })
@@ -103,16 +103,16 @@ class LupaPasswordActivity : AppCompatActivity() {
     private fun postData(email: String, username: String, password: String) {
         ApiService.getRetrofitMySql()
             .postLupaAkun("", email, username, password)
-            .enqueue(object : Callback<ArrayList<ResponseModel>>{
+            .enqueue(object : Callback<ResponseModel>{
                 override fun onResponse(
-                    call: Call<ArrayList<ResponseModel>>,
-                    response: Response<ArrayList<ResponseModel>>
+                    call: Call<ResponseModel>,
+                    response: Response<ResponseModel>
                 ) {
                     Toast.makeText(this@LupaPasswordActivity, "Silahkan Periksa Email Anda", Toast.LENGTH_SHORT).show()
                 }
 
-                override fun onFailure(call: Call<ArrayList<ResponseModel>>, t: Throwable) {
-                    Toast.makeText(this@LupaPasswordActivity, "gagal", Toast.LENGTH_SHORT).show()
+                override fun onFailure(call: Call<ResponseModel>, t: Throwable) {
+                    Toast.makeText(this@LupaPasswordActivity, "gagal post data", Toast.LENGTH_SHORT).show()
                 }
 
             })
