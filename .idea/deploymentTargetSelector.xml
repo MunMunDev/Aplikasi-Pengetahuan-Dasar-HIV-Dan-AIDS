@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-06-13T11:22:28.871786600Z">
+        <DropdownSelection timestamp="2025-07-26T09:18:33.392774200Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=2609616c" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\hp5cd\.android\avd\Oppo_Reno_4_API_31_-_Android_12.avd" />
             </handle>
           </Target>
         </DropdownSelection>

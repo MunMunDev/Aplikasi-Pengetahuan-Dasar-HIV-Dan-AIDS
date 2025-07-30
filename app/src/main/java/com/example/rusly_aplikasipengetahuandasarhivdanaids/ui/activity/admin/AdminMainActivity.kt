@@ -43,11 +43,11 @@ class AdminMainActivity : AppCompatActivity() {
                 startActivity(Intent(this@AdminMainActivity, AdminSemuaDokterActivity::class.java))
                 finish()
             }
-//            btnSemuaUser.setOnClickListener {
+            btnSemuaUser.setOnClickListener {
 //                Toast.makeText(this@AdminMainActivity, "Fitur masih terkunci", Toast.LENGTH_SHORT).show()
-////                startActivity(Intent(this@AdminMainActivity, AdminSemuaUserActivity::class.java))
-////                finish()
-//            }
+                startActivity(Intent(this@AdminMainActivity, AdminSemuaUserActivity::class.java))
+                finish()
+            }
         }
     }
 }

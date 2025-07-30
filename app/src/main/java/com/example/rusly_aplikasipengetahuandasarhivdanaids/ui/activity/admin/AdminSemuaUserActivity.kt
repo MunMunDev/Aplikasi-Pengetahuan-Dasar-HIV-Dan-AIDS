@@ -61,13 +61,14 @@ class AdminSemuaUserActivity : AppCompatActivity() {
                     val id = value.child("id").value.toString()
                     val nama = value.child("nama").value.toString()
                     val umur = value.child("umur").value.toString()
+                    val email = value.child("email").value.toString()
                     val username = value.child("username").value.toString()
                     val password = value.child("password").value.toString()
                     val sebagai = value.child("sebagai").value.toString()
                     val token = value.child("token").value.toString()
 
                     if(sebagai.trim() == "user"){
-                        usersArrayList.add(UsersModel(id, nama, umur, username, password, sebagai, token))
+                        usersArrayList.add(UsersModel(id, nama, umur, email, username, password, sebagai, token))
                     }
                 }
                 Log.d("AdminSemuaUserTAG", "onDataChange: $usersArrayList")
@@ -96,6 +97,7 @@ class AdminSemuaUserActivity : AppCompatActivity() {
 
         val etNama = viewAlertDialog.findViewById<TextView>(R.id.etNama)
         val etUmur = viewAlertDialog.findViewById<TextView>(R.id.etUmur)
+        val etEmail = viewAlertDialog.findViewById<TextView>(R.id.etEmail)
         val etUsername = viewAlertDialog.findViewById<TextView>(R.id.etUsername)
         val etPassword = viewAlertDialog.findViewById<TextView>(R.id.etPassword)
         val btnShowPassword = viewAlertDialog.findViewById<ImageView>(R.id.btnShowPassword)
@@ -133,7 +135,7 @@ class AdminSemuaUserActivity : AppCompatActivity() {
 
         btnSimpan.setOnClickListener {
             loading.alertDialogLoading()
-            postTambahData(dialogInputan, id, etNama.text.toString(), etUmur.text.toString().toInt(), etUsername.text.toString(), etPassword.text.toString(), "user", "")
+            postTambahData(dialogInputan, id, etNama.text.toString(), etUmur.text.toString().toInt(), etEmail.text.toString(), etUsername.text.toString(), etPassword.text.toString(), "user", "")
         }
         btnBatal.setOnClickListener {
             dialogInputan.dismiss()
@@ -145,6 +147,7 @@ class AdminSemuaUserActivity : AppCompatActivity() {
         id: String,
         nama: String,
         umur: Int,
+        email: String,
         username: String,
         password: String,
         sebagai: String,
@@ -169,6 +172,7 @@ class AdminSemuaUserActivity : AppCompatActivity() {
                     database.child(id).child("id").setValue(id)
                     database.child(id).child("nama").setValue(nama)
                     database.child(id).child("umur").setValue(umur)
+                    database.child(id).child("email").setValue(email)
                     database.child(id).child("username").setValue(username)
                     database.child(id).child("password").setValue(password)
                     database.child(id).child("sebagai").setValue(sebagai)

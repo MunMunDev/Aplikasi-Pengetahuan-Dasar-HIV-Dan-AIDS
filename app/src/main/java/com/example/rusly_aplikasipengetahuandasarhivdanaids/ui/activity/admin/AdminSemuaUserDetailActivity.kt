@@ -11,17 +11,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.R
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.data.database.firebase.FirebaseService
-import com.example.rusly_aplikasipengetahuandasarhivdanaids.data.model.User
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.data.model.UsersModel
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.databinding.ActivityAdminSemuaUserDetailBinding
-import com.example.rusly_aplikasipengetahuandasarhivdanaids.utils.KontrolNavigationDrawer
 import com.example.rusly_aplikasipengetahuandasarhivdanaids.utils.LoadingAlertDialog
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
-import java.text.SimpleDateFormat
-import java.util.Calendar
 
 class AdminSemuaUserDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAdminSemuaUserDetailBinding
@@ -52,7 +48,11 @@ class AdminSemuaUserDetailActivity : AppCompatActivity() {
                 dialogHapusdata()
             }
             btnUbahData.setOnClickListener {
-                dialogUpdateData(list.nama!!, list.umur!!.toInt(), list.username!!, list.password!!, list.sebagai!!, list.token!!)
+                dialogUpdateData(
+                    list.nama!!, list.umur!!.toInt(), list.email!!,
+                    list.username!!, list.password!!,
+                    list.sebagai!!, ""
+                )
             }
         }
     }
@@ -115,16 +115,18 @@ class AdminSemuaUserDetailActivity : AppCompatActivity() {
         binding.apply {
             etNama.setText(list.nama)
             etUmur.setText(list.umur.toString())
+            etEmail.setText(list.email)
             etUsername.setText(list.username)
             etPassword.setText(list.password)
         }
     }
 
-    fun dialogUpdateData(nama: String, umur: Int, username: String, password: String, sebagai: String, token: String){
+    fun dialogUpdateData(nama: String, umur: Int, email: String, username: String, password: String, sebagai: String, token: String){
         val viewAlertDialog = View.inflate(this@AdminSemuaUserDetailActivity, R.layout.alert_dialog_update_akun, null)
 
         val etNama = viewAlertDialog.findViewById<TextView>(R.id.etNama)
         val etUmur = viewAlertDialog.findViewById<TextView>(R.id.etUmur)
+        val etEmail = viewAlertDialog.findViewById<TextView>(R.id.etEmail)
         val etUsername = viewAlertDialog.findViewById<TextView>(R.id.etUsername)
         val etPassword = viewAlertDialog.findViewById<TextView>(R.id.etPassword)
         val btnShowPassword = viewAlertDialog.findViewById<ImageView>(R.id.btnShowPassword)
@@ -135,6 +137,7 @@ class AdminSemuaUserDetailActivity : AppCompatActivity() {
 
         etNama.text = nama
         etUmur.text = umur.toString()
+        etEmail.text = email
         etUsername.text = username
         etPassword.text = password
 
@@ -157,7 +160,12 @@ class AdminSemuaUserDetailActivity : AppCompatActivity() {
 
         btnSimpan.setOnClickListener {
             loading.alertDialogLoading()
-            postUpdateData(dialogInputan, idUser!!, etNama.text.toString(), etUmur.text.toString(), etUsername.text.toString(), etPassword.text.toString(), sebagai, token, username)
+            postUpdateData(
+                dialogInputan, idUser!!, etNama.text.toString(),
+                etUmur.text.toString(), etEmail.text.toString(),
+                etUsername.text.toString(), etPassword.text.toString(),
+                sebagai, "", username
+            )
         }
         btnBatal.setOnClickListener {
             dialogInputan.dismiss()
@@ -165,7 +173,11 @@ class AdminSemuaUserDetailActivity : AppCompatActivity() {
     }
 
 
-    fun postUpdateData(dialogInputan: AlertDialog, id:String, nama: String, umur: String, username: String, password: String, sebagai: String, token:String, usernameLama:String){
+    fun postUpdateData(
+        dialogInputan: AlertDialog, id:String, nama: String, umur: String,
+        email: String, username: String, password: String, sebagai: String,
+        token:String, usernameLama:String
+    ){
         database.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 var cekUsernameTerdaftar = false
@@ -186,19 +198,21 @@ class AdminSemuaUserDetailActivity : AppCompatActivity() {
                         database.child(id).child("id").setValue(id)
                         database.child(id).child("nama").setValue(nama)
                         database.child(id).child("umur").setValue(umur)
+                        database.child(id).child("email").setValue(email)
                         database.child(id).child("username").setValue(username)
                         database.child(id).child("password").setValue(password)
                         database.child(id).child("sebagai").setValue(sebagai)
-                        database.child(id).child("token").setValue(token)
+//                        database.child(id).child("token").setValue(token)
 
                         list = UsersModel(
                             id,
                             nama,
                             umur,
+                            email,
                             username,
                             password,
                             sebagai,
-                            token
+                            ""
                         )
 
                         setData()
@@ -220,10 +234,11 @@ class AdminSemuaUserDetailActivity : AppCompatActivity() {
                         id,
                         nama,
                         umur,
+                        email,
                         username,
                         password,
                         sebagai,
-                        token
+                        ""
                     )
                     setData()
 

@@ -57,4 +57,31 @@ class TanggalDanWaktu {
         }
         return time
     }
+
+    fun konversiBulanSingkatan(bulan: String): String{
+        val arrayBulan = arrayOf(
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "Mei",
+            "Juni",
+            "Juli",
+            "Agust",
+            "Sep",
+            "Okt",
+            "Nov",
+            "Des"
+        )
+
+        val splitBulan = bulan.split("-")
+        val valueBulan = "${splitBulan[2]} ${arrayBulan[(splitBulan[1].toInt()-1)]} ${splitBulan[0]}"
+
+        return valueBulan
+    }
+
+    fun waktuNoSecond(waktu: String): String{
+        val arrayWaktu = waktu.split(":")
+        return "${arrayWaktu[0]}:${arrayWaktu[1]}"
+    }
 }

@@ -125,11 +125,11 @@ class KontrolNavigationDrawer(var context: Context) {
                         context.startActivity(intent)
                         activity.finish()
                     }
-//                    R.id.adminNavDrawerUser ->{
-//                        val intent = Intent(Intent(context, AdminSemuaUserActivity::class.java))
-//                        context.startActivity(intent)
-//                        activity.finish()
-//                    }
+                    R.id.adminNavDrawerUser ->{
+                        val intent = Intent(Intent(context, AdminSemuaUserActivity::class.java))
+                        context.startActivity(intent)
+                        activity.finish()
+                    }
                     R.id.btnAdminKeluar ->{
                         logout(activity)
                     }

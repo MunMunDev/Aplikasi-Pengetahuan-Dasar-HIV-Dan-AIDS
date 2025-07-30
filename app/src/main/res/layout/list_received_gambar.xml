@@ -3,29 +3,36 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-<!--    <TextView-->
-<!--        android:id="@+id/tvMessage"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:maxWidth="280dp"-->
-<!--        android:layout_marginTop="10dp"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        android:text="Ini Chat Diterima. Dan halo dokter nama saya pasien dan saya ingin konsultasi"-->
-<!--        android:textSize="14sp"-->
-<!--        android:textColor="@color/black"-->
-<!--        android:textStyle="normal"-->
-<!--        android:background="@drawable/bg_chat_received"/>-->
 
-    <androidx.constraintlayout.utils.widget.ImageFilterView
-        android:id="@+id/ivMessageReceivedImage"
-        android:layout_width="280dp"
-        android:layout_height="280dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:maxWidth="280dp"
-        android:layout_marginTop="10dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@drawable/bg_chat_received"
-        android:src="@drawable/icon_akun"/>
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_chat_received">
+        <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:id="@+id/ivMessageReceivedImage"
+            android:layout_width="260dp"
+            android:layout_height="260dp"
+            android:maxWidth="260dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/icon_akun"/>
+        <TextView
+            android:id="@+id/tvWaktuReceivedImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="250dp"
+            app:layout_constraintTop_toBottomOf="@id/ivMessageReceivedImage"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="6dp"
+            android:text="14 Jan 2025 - 10:00"
+            android:textSize="11sp"
+            android:textColor="@color/abuabu_tua"
+            android:textStyle="normal"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

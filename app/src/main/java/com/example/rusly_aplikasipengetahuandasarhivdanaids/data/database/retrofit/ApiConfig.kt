@@ -30,12 +30,12 @@ interface ApiConfig {
 
     @FormUrlEncoded
     @POST("rusly/send_chat.php")
-    fun postChat(
+    suspend fun postChat(
         @Field("send_chat") send_chat: String,
         @Field("title") title: String,
         @Field("body") body: String,
         @Field("deviceToken") deviceToken: String,
-    ): Call<ResponseModel>
+    ): ResponseModel
 
     @Multipart
     @POST("rusly/upload_gambar.php")

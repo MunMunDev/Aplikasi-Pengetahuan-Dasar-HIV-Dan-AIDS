@@ -39,6 +39,11 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -46,6 +51,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.await
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalTime
@@ -53,6 +59,8 @@ import java.time.ZoneId
 import java.util.Calendar
 import java.util.Date
 import java.util.TimeZone
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 
 class ChatActivity : Activity() {
     lateinit var binding : ActivityChatBinding
@@ -106,6 +114,8 @@ class ChatActivity : Activity() {
                 llChatOtomatis.visibility = View.GONE
                 svPertanyaanOtomatis.visibility = View.GONE
 
+                val data : List<MessageModel> = arrayListOf()
+                setTempAdapterChatKonsultasi(data)
                 fetchChatKonsultasi()
                 etMessage.requestFocus()
             } else{
@@ -197,6 +207,8 @@ class ChatActivity : Activity() {
             rvListKonsultasiChatDokter.visibility = View.VISIBLE
             etMessage.requestFocus()
 
+            val data : List<MessageModel> = arrayListOf()
+            setTempAdapterChatKonsultasi(data)
             fetchChatKonsultasi()
         }
     }
@@ -205,39 +217,80 @@ class ChatActivity : Activity() {
         id: String,
         message: String,
         gambar: String
-    ){
+    ) {
         loading.alertDialogLoading()
-        database = FirebaseService().firebase().child("chats").child("message")
-        database.addListenerForSingleValueEvent(object: ValueEventListener{
+        val database = FirebaseService().firebase().child("chats").child("message")
+        database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                database.child("$id").child("idMessage").setValue(id)
-                database.child("$id").child("message").setValue(message)
-                database.child("$id").child("gambar").setValue(gambar)
-                database.child("$id").child("idSent").setValue(idSent)
-                database.child("$id").child("idReceived").setValue(idReceived)
-                database.child("$id").child("tanggal").setValue(tanggalSekarangZonaMakassar())
-                database.child("$id").child("waktu").setValue(waktuSekarangZonaMakassar())
-                database.child("$id").child("ket").setValue("belum dibaca")
+                // Menyimpan data ke database menggunakan updateChildren
+                val messageData = mapOf(
+                    "idMessage" to id,
+                    "message" to message,
+                    "gambar" to gambar,
+                    "idSent" to idSent,
+                    "idReceived" to idReceived,
+                    "tanggal" to tanggalSekarangZonaMakassar(),
+                    "waktu" to waktuSekarangZonaMakassar(),
+                    "ket" to "belum dibaca"
+                )
 
-                if(gambar.trim().isEmpty()){
-                    val valueMessage = "$message;-;${sharedPref.getId()};-;${sharedPref.getToken()}"
-//                    val valueMessage = message
-                    Log.d(TAG, "onDataChange: token: $token")
-                    postMessage(sharedPref.getNama(), valueMessage, token.toString())
+                // Menggunakan updateChildren untuk mengurangi jumlah panggilan
+                database.child("$id").updateChildren(messageData).addOnCompleteListener {
+                    loading.alertDialogCancel()
                     binding.etMessage.text = null
-                } else{
-                    postMessage(sharedPref.getNama(), "Ada Gambar Diterima", token.toString())
-                }
 
-//                hurufAcak()
+                    // Memanggil sendMessageNotification di coroutine
+                    CoroutineScope(Dispatchers.IO).launch {
+                        try {
+                            sendMessageNotification(id, message, gambar)
+                        } catch (e: Exception) {
+                            // Menangani kesalahan di thread utama
+                            withContext(Dispatchers.Main) {
+                                Toast.makeText(this@ChatActivity, "Gagal mengirim pesan", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                }.addOnFailureListener {
+                    loading.alertDialogCancel()
+                    Toast.makeText(this@ChatActivity, "Gagal menyimpan pesan", Toast.LENGTH_SHORT).show()
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {
+                loading.alertDialogCancel()
                 Toast.makeText(this@ChatActivity, "Gagal", Toast.LENGTH_SHORT).show()
             }
-
         })
     }
+
+
+    suspend fun sendMessageNotification(
+        id: String,
+        message: String,
+        gambar: String
+    ) {
+        if (gambar.trim().isEmpty()) {
+            val valueMessage = "$message;-;${sharedPref.getId()};-;${sharedPref.getToken()}"
+            postMessage(sharedPref.getNama(), valueMessage, token.toString())
+        } else {
+            postMessage(sharedPref.getNama(), "Ada Gambar Diterima", token.toString())
+        }
+    }
+
+    private suspend fun postMessage(valueNama: String, valueMessage: String, token: String) {
+        try {
+            // Memanggil fungsi suspend postChat secara langsung
+            val response = ApiService.getRetrofitMySql().postChat("", valueNama, valueMessage, token)
+
+            // Memeriksa apakah response berhasil
+            if (response.status != "0") { // Sesuaikan dengan logika status yang Anda gunakan
+                throw Exception("Error: ${response.message_response}")
+            }
+        } catch (e: Exception) {
+            throw e // Re-throw untuk ditangkap oleh caller
+        }
+    }
+
 
     private fun setCheckJamOperasional() {
         val waktuZonaMakassar = waktuSekarangZonaMakassar().split(":")
@@ -339,6 +392,7 @@ class ChatActivity : Activity() {
                 val sorted = messageArrayList.sortedWith(compareBy { it.idMessage })
 
                 setAdapterChatKonsultasi(sorted)
+                binding.rvListKonsultasiChatDokter.scrollToPosition(messageArrayList.size-1)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -350,25 +404,48 @@ class ChatActivity : Activity() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun setAdapterChatKonsultasi(list: List<MessageModel>) {
-//        Log.d(TAG, "setAdapterChatKonsultasi: ${list.size}")
-//        for (value in list){
-//            Log.d(TAG, "idMessage: ${value.idMessage}")
-//            Log.d(TAG, "message: ${value.message}")
-//            Log.d(TAG, "gambar: ${value.gambar}")
-//            Log.d(TAG, "idSent: ${value.idSent}")
-//            Log.d(TAG, "idReceived: ${value.idReceived}")
-//            Log.d(TAG, "tanggal: ${value.tanggal}")
-//            Log.d(TAG, "waktu: ${value.waktu}")
-//            Log.d(TAG, "ket: ${value.ket}")
-//        }
-        val messageAdapter = MessageKonsultasiAdapter(this@ChatActivity, list, sharedPref.getId())
 
+        val numberOfDifferentDates = list.map { it.tanggal.let {date->
+            date.toString()
+        }.trim() }.distinct().count()
+
+        messageAdapter.setData(list, numberOfDifferentDates)
+
+//        var aa = ""
+//        for(data in list){
+//            Log.d(TAG, "setAdapterChatKonsultasi: ${data.tanggal}")
+//            if(aa != data.tanggal){
+//                Log.d(TAG, "setAdapterChatKonsultasi::: ${data.tanggal}")
+//                aa = data.tanggal!!
+//            }
+//        }
+
+//        val messageAdapter = MessageKonsultasiAdapter(this@ChatActivity, list, sharedPref.getId(), numberOfDifferentDates)
+//        binding.apply {
+//            rvListKonsultasiChatDokter.layoutManager = LinearLayoutManager(this@ChatActivity)
+//            rvListKonsultasiChatDokter.adapter = messageAdapter
+//            rvListKonsultasiChatDokter.scrollToPosition(messageArrayList.size-1)
+//            messageAdapter.notifyDataSetChanged()
+//        }
+    }
+    private fun setTempAdapterChatKonsultasi(list: List<MessageModel>) {
+        messageAdapter = MessageKonsultasiAdapter(this@ChatActivity, list, sharedPref.getId(), 0)
         binding.apply {
             rvListKonsultasiChatDokter.layoutManager = LinearLayoutManager(this@ChatActivity)
             rvListKonsultasiChatDokter.adapter = messageAdapter
-            rvListKonsultasiChatDokter.scrollToPosition(messageArrayList.size-1)
             messageAdapter.notifyDataSetChanged()
         }
+    }
+
+    fun countUniqueDates(messages: List<MessageModel>): Int {
+        // Menggunakan Set untuk menyimpan tanggal unik
+        val uniqueDates = mutableSetOf<String>()
+        // Iterasi melalui daftar MessageModel dan tambahkan tanggal ke Set
+        for (message in messages) {
+            uniqueDates.add(message.tanggal!!)
+        }
+        // Mengembalikan jumlah tanggal unik
+        return uniqueDates.size
     }
 
     private fun fetchChatPertanyaanOtomatis(){
@@ -621,33 +698,33 @@ class ChatActivity : Activity() {
         return hurufAcak
     }
 
-    fun postMessage(valueNama:String, valueMessage:String, token: String){
-        ApiService.getRetrofitMySql().postChat("", valueNama, valueMessage, token)
-            .enqueue(object: Callback<ResponseModel>{
-                override fun onResponse(
-                    call: Call<ResponseModel>,
-                    response: Response<ResponseModel>
-                ) {
-                    loading.alertDialogCancel()
-                    if(response.isSuccessful){
-                        val responseData = response.body()!!
-                        if(responseData.status == "0"){
-                            Toast.makeText(this@ChatActivity, "Berhasil Kirim chat", Toast.LENGTH_SHORT).show()
-                        } else{
-                            Toast.makeText(this@ChatActivity, "Response: ${responseData.message_response}", Toast.LENGTH_SHORT).show()
-                        }
-                    } else{
-                        Toast.makeText(this@ChatActivity, "Error", Toast.LENGTH_SHORT).show()
-                    }
-                }
-
-                override fun onFailure(call: Call<ResponseModel>, t: Throwable) {
-                    loading.alertDialogCancel()
-                    Toast.makeText(this@ChatActivity, "Gagal Kirim", Toast.LENGTH_SHORT).show()
-                }
-
-            })
-    }
+//    fun postMessage(valueNama:String, valueMessage:String, token: String){
+//        ApiService.getRetrofitMySql().postChat("", valueNama, valueMessage, token)
+//            .enqueue(object: Callback<ResponseModel>{
+//                override fun onResponse(
+//                    call: Call<ResponseModel>,
+//                    response: Response<ResponseModel>
+//                ) {
+//                    loading.alertDialogCancel()
+//                    if(response.isSuccessful){
+//                        val responseData = response.body()!!
+//                        if(responseData.status == "0"){
+//                            Toast.makeText(this@ChatActivity, "Berhasil Kirim chat", Toast.LENGTH_SHORT).show()
+//                        } else{
+//                            Toast.makeText(this@ChatActivity, "Response: ${responseData.message_response}", Toast.LENGTH_SHORT).show()
+//                        }
+//                    } else{
+//                        Toast.makeText(this@ChatActivity, "Error", Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//
+//                override fun onFailure(call: Call<ResponseModel>, t: Throwable) {
+//                    loading.alertDialogCancel()
+//                    Toast.makeText(this@ChatActivity, "Gagal Kirim", Toast.LENGTH_SHORT).show()
+//                }
+//
+//            })
+//    }
 
     // permission add image
     private fun requestPermission(){

@@ -155,31 +155,31 @@
                     android:textStyle="bold"/>
             </LinearLayout>
 
-<!--            <LinearLayout-->
-<!--                android:id="@+id/btnSemuaUser"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toEndOf="@id/pembatasVertical"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/pembatasHorizontal"-->
-<!--                android:layout_marginStart="4dp"-->
-<!--                android:layout_marginTop="12dp"-->
-<!--                android:layout_marginBottom="6dp"-->
-<!--                android:gravity="top|center"-->
-<!--                android:orientation="vertical">-->
-<!--                <ImageView-->
-<!--                    android:layout_width="45dp"-->
-<!--                    android:layout_height="45dp"-->
-<!--                    android:src="@drawable/icon_users"-->
-<!--                    android:layout_marginBottom="6dp"/>-->
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="Semua User"-->
-<!--                    android:textSize="14sp"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textStyle="bold"/>-->
-<!--            </LinearLayout>-->
+            <LinearLayout
+                android:id="@+id/btnSemuaUser"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/pembatasVertical"
+                app:layout_constraintTop_toBottomOf="@id/pembatasHorizontal"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="6dp"
+                android:gravity="top|center"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:src="@drawable/icon_users"
+                    android:layout_marginBottom="6dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Semua User"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

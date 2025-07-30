@@ -2,6 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="putih_tulang">#F9F6EE</color>
 
     <!-- Color -->
     <color name="success">#73B908</color>
